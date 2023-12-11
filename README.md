@@ -7,7 +7,7 @@ known as kitchens. And what probably many of you know well, after a few weeks of
 # TODO
 - [ ] main preprocessing DANIEL
 - [ ] formulate the questions better (type of plot, which data)
-- [ ] webpage template
+- [ ] webpage template Amal
   - [ ] layout, which questions are connected CARLA 
 - [ ] visualize each question
 
