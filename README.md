@@ -35,3 +35,8 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
   - for each recipe extra columns
     - all dates
     - all ratings
+
+# Final submission
+- [ ] Interactive website
+- [ ] presentation
+- [ ] GitHub documentation
