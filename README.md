@@ -8,7 +8,7 @@ known as kitchens. And what probably many of you know well, after a few weeks of
 - [ ] main preprocessing DANIEL
 - [ ] formulate the questions better (type of plot, which data)
 - [ ] webpage template
-  - [ ] layout, which questions are conneted 
+  - [ ] layout, which questions are connected CARLA 
 - [ ] visualize each question
 
 # Dataset food.com
