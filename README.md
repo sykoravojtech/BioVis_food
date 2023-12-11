@@ -25,7 +25,8 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
   - submitted
   - tags
     - cuisine
-    - 
+    - Vegan
+    - Vegetarian
   - nutrition
   - n_steps
   - ingredients
