@@ -5,7 +5,7 @@ of lockdowns and restrictions, more people started experimenting in their chemic
 known as kitchens. And what probably many of you know well, after a few weeks of home cooking we need to boost our inspiration, unless we want to make the same meals over and over again.
 
 # TODO
-- [ ] main preprocessing DANIEL
+- [x] main preprocessing (DANIEL)
 - [ ] formulate the questions better (type of plot, which data)
 - [ ] webpage template Amal
   - [ ] layout, which questions are connected CARLA 
