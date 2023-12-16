@@ -26,7 +26,7 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
 - The popularity of cuisines over time.
   
 ## Which combination of ingredients are most prevalent in each cuisine?
-The most popular ingredients are usually sat, water or sugar so if we ignore these we get a heatmap and a map showing a much better representation of the culture 
+The most popular ingredients are usually salt, water or sugar so if we ignore these we get a heatmap and a map showing a much better representation of the culture 
 ![top_5_ingredients_heatmap](visuals/top_5_ingredients_heatmap.png)
 ![top_ingredients_map](visuals/top_ingredients_map.png)
 
