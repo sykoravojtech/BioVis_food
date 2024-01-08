@@ -9,9 +9,9 @@ known as kitchens. And what probably many of you know well, after a few weeks of
 - [ ] formulate the questions better (type of plot, which data)
   - [ ] Which combination of ingredients are most prevalent in each cuisine? VOJTA
   - [ ] Comparative analysis of cuisines (nutritional value, number of steps/ingredients, preparation time, and number of vegan/vegetarian recipes) DANIEL
-- [ ] webpage template Amal
+- [ ] webpage template 
   - [ ] layout, which questions are connected CARLA 
-- [ ] visualize each question
+- [ ] visualize each question Amal (Q1)
 
 # Dataset food.com
 We took a kaggle dataset which scraped data from https://www.food.com/
