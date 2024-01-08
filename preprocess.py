@@ -1,26 +1,6 @@
 import pandas as pd
 import ast
-
-
-# ANSI color codes
-GREEN = '\033[92m'
-END = '\033[0m'
-
-
-# Define cuisine tags
-cuisine_tags = [
-    'angolan', 'argentine', 'australian', 'austrian', 'belgian', 'brazilian', 'cambodian', 'canadian',
-    'chilean', 'chinese', 'colombian', 'costa-rican', 'cuban', 'czech', 'danish', 'ecuadorean', 'egyptian',
-    'english', 'ethiopian', 'filipino', 'finnish', 'french', 'georgian', 'german', 'greek', 'guatemalan',
-    'hawaiian', 'hungarian', 'indian', 'indonesian', 'iranian-persian', 'iraqi', 'irish', 'italian', 'japanese',
-    'korean', 'lebanese', 'libyan', 'malaysian', 'mexican', 'mongolian', 'moroccan', 'nepalese', 'nigerian',
-    'norwegian', 'pakistani', 'palestinian', 'peruvian', 'polish', 'portuguese', 'puerto-rican', 'russian',
-    'scottish', 'south-african', 'spanish', 'swedish', 'swiss', 'thai', 'turkish', 'vietnamese', 'welsh',
-    'british-columbian', 'european', 'middle-eastern', 'pacific-northwest', 'quebec', 'scandinavian',
-    'southern-united-states', 'southwestern-united-states', 'polynesian', 'south-american',
-    'african', 'american', 'asian', 'european', 'north-american'
-]
-
+from utils import *
 
 def main():
     # Read the raw recipes and interactions data
@@ -51,7 +31,7 @@ def main():
 
     # Loop through recipes and extract tags from cuisine_tags
     print("Extracting cuisine tags...")
-    df['cuisine_tags'] = df['tags'].apply(lambda x: [tag for tag in ast.literal_eval(x) if tag in cuisine_tags])
+    df['cuisine_tags'] = df['tags'].apply(lambda x: [tag for tag in ast.literal_eval(x) if tag in all_cuisine_tags])
     print(GREEN + "Cuisine tags extracted successfully!" + END)
 
     # Check if 'vegan' and 'vegetarian' tags exist and create 'vegan' and 'vegetarian' columns
