@@ -11,7 +11,7 @@ known as kitchens. And what probably many of you know well, after a few weeks of
   - [ ] Comparative analysis of cuisines (nutritional value, number of steps/ingredients, preparation time, and number of vegan/vegetarian recipes) DANIEL
 - [ ] webpage template 
   - [ ] layout, which questions are connected CARLA 
-- [ ] visualize each question Amal (Q1)
+- [ ] visualize each question 
 - [ ] popularity analysis of the cuisines over time MELIS
       
 # Dataset food.com
@@ -20,7 +20,7 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
 
 # Questions
 - Which combination of ingredients are most prevalent in each cuisine?
-- Graph analysis of the similarity of cuisines based on their similar ingredients.
+- Graph analysis of the similarity of cuisines based on their similar ingredients. Amal
 - Which cuisine requires the most __ on average?
   - ingredients
   - steps
