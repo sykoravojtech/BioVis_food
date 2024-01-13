@@ -12,7 +12,8 @@ known as kitchens. And what probably many of you know well, after a few weeks of
 - [ ] webpage template 
   - [ ] layout, which questions are connected CARLA 
 - [ ] visualize each question Amal (Q1)
-
+- [ ] popularity analysis of the cuisines over time MELIS
+      
 # Dataset food.com
 We took a kaggle dataset which scraped data from https://www.food.com/
 Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions
