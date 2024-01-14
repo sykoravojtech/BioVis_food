@@ -5,20 +5,22 @@ of lockdowns and restrictions, more people started experimenting in their chemic
 known as kitchens. And what probably many of you know well, after a few weeks of home cooking we need to boost our inspiration, unless we want to make the same meals over and over again.
 
 # TODO
-- [x] main preprocessing (DANIEL)
+- [x] main preprocessing DANIEL
 - [ ] formulate the questions better (type of plot, which data)
   - [ ] Which combination of ingredients are most prevalent in each cuisine? VOJTA
-- [ ] webpage template Amal
+  - [ ] Comparative analysis of cuisines (nutritional value, number of steps/ingredients, preparation time, and number of vegan/vegetarian recipes) DANIEL
+- [ ] webpage template 
   - [ ] layout, which questions are connected CARLA 
-- [ ] visualize each question
-
+- [ ] visualize each question 
+- [ ] popularity analysis of the cuisines over time MELIS
+      
 # Dataset food.com
 We took a kaggle dataset which scraped data from https://www.food.com/
 Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions
 
 # Questions
 - Which combination of ingredients are most prevalent in each cuisine?
-- Graph analysis of the similarity of cuisines based on their similar ingredients.
+- Graph analysis of the similarity of cuisines based on their similar ingredients. Amal
 - Which cuisine requires the most __ on average?
   - ingredients
   - steps
