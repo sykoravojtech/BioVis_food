@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='Final_Project.css') }}">
+    <title>VISUALIZATION OF BIOLOGICAL DATA FINAL PROJECT</title>
+</head>
+<body>
+    <h1> Final Project: Food Database Analysis </h1>
+    <div id="mainContainer">
+        <div id="menuContainer">
+            <h2>Menu</h2>
+            <hr class="mainHR"/>
+            <ol>
+                <li>
+                    <button onclick="executeLink('{{ url_for('introduction') }}')">INTRODUCTION</button>
+                </li>
+                <hr/>
+                <li>
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=1) }}')">PLOT 1</button>
+                </li>
+                <hr/>
+                <li>
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=2) }}')">PLOT 2</button>
+                </li>
+                <hr/>
+                <li>
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=3) }}')">PLOT 3</button>
+                </li>
+                <hr/>
+                <li>
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=4) }}')">PLOT 4</button>
+                </li>
+                <hr/>
+            </ol>
+        </div>
+        <div id="dataContainer">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <script>
+        // JavaScript function to execute the link when pressing the button
+        function executeLink(url) {
+            window.location.href = decodeURIComponent(url);
+        }
+    </script>
+</body>
+</html>
