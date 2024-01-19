@@ -13,7 +13,11 @@ def introduction():
 
 @app.route('/plot/<int:plot_number>')
 def plot(plot_number):
-    return render_template(f'plot{plot_number}.html')
+    plot_data = load_data()
+    return render_template(f'plot{plot_number}.html', plot_data=plot_data)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+
+
+# Write the function load_data to retrieve the data of each plot
