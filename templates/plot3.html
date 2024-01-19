@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script type="text/javascript" >
+    dataArray = {{ plot_data  | safe }};
+</script>
+    <div id="textContainer">
+        <h3>Plot Description</h3>
+        <hr class="mainHR"/>
+        <p>
+            PLOT 3 Your introduction or plot description content here...
+        </p>
+    </div>
+    <div id="plotContainer">
+        <img src="https://ppcexpo.com/blog/wp-content/uploads/2023/12/scatter-plot-examples-main.jpeg" alt="Plot Description">
+    </div>
+    <script src="{{ url_for('static', filename='yourfilename.js') }}"></script>
+{% endblock %}
