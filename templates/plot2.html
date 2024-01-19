@@ -1,18 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-<script type="text/javascript" >
-    dataArray = {{ plot_data  | safe }};
+<div id="filterContainer">
+    <h3>Plot Selection</h3>
+</div>
+
+<div id="plotContainer"></div>
+
+<div id="cuisineContainer">
+    <h3>Cuisine</h3>
+</div>
+
+<script type="text/javascript">
+    df = {{ plot_data  | safe }};
 </script>
-    <div id="textContainer">
-        <h3>Plot Description</h3>
-        <hr class="mainHR"/>
-        <p>
-            PLOT 2 Your introduction or plot description content here...
-        </p>
-    </div>
-    <div id="plotContainer">
-        <img src="https://images.saymedia-content.com/.image/t_share/MTc0MTYyMTE1NzA2NDMwOTcy/how-to-draw-a-scientific-graph.gif" alt="Plot Description">
-    </div>
-    <script src="{{ url_for('static', filename='yourfilename.js') }}"></script>
+
+<script src="{{ url_for('static', filename='plot2.js') }}"></script>
+
 {% endblock %}
