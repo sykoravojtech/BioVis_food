@@ -5,6 +5,10 @@ import pandas as pd
 def load_plot2_data():
     return pd.read_csv('./Data/cuisine_stats.csv').values.tolist()
 
+def load_plot3_data():
+    return pd.read_csv('./Data/popularity.csv').values.tolist()
+
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
@@ -21,6 +25,10 @@ def plot(plot_number):
     if (plot_number) == 2:
         plot_data = load_plot2_data()
         return render_template(f'plot{plot_number}.html', plot_data=plot_data)
+    elif(plot_number) == 3:
+        plot_data = load_plot3_data()
+        return render_template(f'plot{plot_number}.html', plot_data=plot_data)
+    
     else:
         plot_data = load_data()
         return render_template(f'plot{plot_number}.html', plot_data=plot_data)

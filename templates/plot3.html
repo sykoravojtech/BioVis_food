@@ -10,9 +10,14 @@
         <p>
             PLOT 3 Your introduction or plot description content here...
         </p>
+
+        <label for="dynamicDropdown">Select a cuisine:</label>
+        <select id="dynamicDropdown" name="dynamicDropdown">
+        </select>
+
     </div>
     <div id="plotContainer">
-        <img src="https://ppcexpo.com/blog/wp-content/uploads/2023/12/scatter-plot-examples-main.jpeg" alt="Plot Description">
+     
     </div>
-    <script src="{{ url_for('static', filename='yourfilename.js') }}"></script>
+    <script src="{{ url_for('static', filename='./plot3/plot3.js') }}"></script>
 {% endblock %}
