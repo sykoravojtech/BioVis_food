@@ -1,19 +1,32 @@
 {% extends 'base.html' %} {% block content %}
 
-<div id="filterContainer">
-    <h3>Plot Selection</h3>
+<div id="leftContainer">
+    <h3>Cuisine Statistics</h3>
+    <hr class="mainHR" />
+    <div id="plotFilterContainer">
+        <h4>Select Plot Type</h4>
+        <select id="plotTypeDropdown">
+            <option value="Recipe Type Percentages">Recipe Type Percentages</option>
+            <option value="Nutrient PDV Percentages">Nutrient PDV Percentages</option>
+        </select>
+    </div>
+    <div id="cuisineFilterContainer">
+        <h4>Select Cuisines</h4>
+    </div>
 </div>
 
-<div id="plotContainer"></div>
-
-<div id="cuisineContainer">
-    <h3>Cuisine</h3>
+<div id="centerContainer"></div>
+<div id="rightContainer">
+    <h4>Cuisine Details</h4>
 </div>
 
 <script type="text/javascript">
     df = {{ plot_data  | safe }};
 </script>
 
-<script src="{{ url_for('static', filename='plot2.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/plotType.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/cuisinesList.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/cuisinesTree.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/plot2.js') }}"></script>
 
 {% endblock %}
