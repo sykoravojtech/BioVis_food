@@ -5,14 +5,16 @@
     dataArray = {{ plot_data  | safe }};
 </script>
     <div id="textContainer">
-        <h3>Plot Description</h3>
+        <h3>Ingredients in Cuisines</h3>
         <hr class="mainHR"/>
         <p>
             PLOT 1 Your introduction or plot description content here...
         </p>
     </div>
     <div id="plotContainer">
-        <img src="https://cdn.storyboardthat.com/site-images/articles/plot-diagram.png" alt="Plot Description">
+        <svg id="heat-map"></svg>
+        <svg id="world-map"></svg>
+        <svg id="world-map2"></svg>
     </div>
-    <script src="{{ url_for('static', filename='yourfilename.js') }}"></script>
+    <script src="{{ url_for('static', filename='./plot1/geomaps.js') }}"></script>
 {% endblock %}
