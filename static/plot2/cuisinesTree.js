@@ -1,3 +1,28 @@
+var checkedLabels = [];
+
+var selectedPlot = "Recipe Type Percentages";
+
+var plotTypeDropdown = d3.select("#plotTypeDropdown");
+
+// Add an event listener for the 'change' event
+plotTypeDropdown.on("change", function () {
+    // Get the selected value
+    selectedPlot = plotTypeDropdown.property("value");
+
+    // Call different functions based on the selected value
+    switch (selectedPlot) {
+        case "Recipe Type Percentages":
+            renderRecipesPlot();
+            break;
+        case "Nutrient PDV Percentages":
+            renderNutrientsPlot();
+            break;
+        default:
+            // Handle other cases if needed
+            break;
+    }
+});
+
 /**
  * Represents the container for the cuisine filter tree.
  * @type {Object}
@@ -10,7 +35,7 @@ var container = d3.select("#cuisineFilterContainer");
  */
 var scrollContainer = container
     .append("div")
-    .style("max-height", "60vh")
+    .style("max-height", "20.8vh")
     .style("overflow", "auto");
 
 /**
@@ -56,7 +81,7 @@ function createCuisinesTree() {
                     .attr("type", "checkbox")
                     .attr("id", continent + "_" + i + "Checkbox")
                     .attr("class", "childCheckbox")
-                    .on("change", printCheckedLabels);
+                    .on("change", checkAction);
 
                 // Create label for country
                 countryItem
@@ -87,15 +112,15 @@ function toggleChildren() {
         childUl.style("display", "none");
     }
 
-    printCheckedLabels();
+    checkAction();
 }
 
 /**
- * Prints labels of checked checkboxes to the console.
+ * Check Action
  * @function
  */
-function printCheckedLabels() {
-    var checkedLabels = [];
+function checkAction() {
+    checkedLabels = [];
 
     // Loop through all checkboxes
     rootList.selectAll("input[type='checkbox']").each(function () {
@@ -104,7 +129,17 @@ function printCheckedLabels() {
         }
     });
 
-    console.log("Checked Labels:", checkedLabels);
+    switch (selectedPlot) {
+        case "Recipe Type Percentages":
+            updateRecipesPlot();
+            break;
+        case "Nutrient PDV Percentages":
+            updateNutrientsPlot();
+            break;
+        default:
+            // Handle other cases if needed
+            break;
+    }
 }
 
 // Initial call to create the cuisines tree

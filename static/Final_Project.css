@@ -5,9 +5,9 @@
 }
 
 #menuContainer {
-    flex-basis: 20%;
+    flex-basis: 8%;
     background-color: #f5f6f7; /* Set your desired background color */
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
 }
 
@@ -34,7 +34,7 @@ button:focus {
 }
 
 #dataContainer {
-    flex-basis: 80%;
+    flex-basis: 92%;
     padding: 2%;
     padding-top: 1%;
     box-sizing: border-box;

@@ -24,6 +24,7 @@ const cuisines = {
         "Portuguese",
         "Hungarian",
         "Austrian",
+        "Norwegian",
     ],
     Oceanian: ["Australian", "Polynesian"],
     Asian: [
@@ -31,7 +32,7 @@ const cuisines = {
         "Iraqi",
         "Pakistani",
         "Filipino",
-        "Iranian Persian",
+        "Iranian",
         "Turkish",
         "Georgian",
         "Malaysian",

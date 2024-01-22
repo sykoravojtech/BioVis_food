@@ -13,20 +13,27 @@
     <div id="cuisineFilterContainer">
         <h4>Select Cuisines</h4>
     </div>
+    <div id="legendContainer">
+        <h4>Legend</h4>
+    </div>
 </div>
 
-<div id="centerContainer"></div>
+<div id="centerContainer">
+    <svg id="plot"></svg>
+</div>
 <div id="rightContainer">
     <h4>Cuisine Details</h4>
 </div>
 
 <script type="text/javascript">
-    df = {{ plot_data  | safe }};
+    dataset = {{ plot_data  | safe }};
 </script>
 
-<script src="{{ url_for('static', filename='./plot2/plotType.js') }}"></script>
 <script src="{{ url_for('static', filename='./plot2/cuisinesList.js') }}"></script>
 <script src="{{ url_for('static', filename='./plot2/cuisinesTree.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/plotType.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/recipesPlot.js') }}"></script>
+<script src="{{ url_for('static', filename='./plot2/nutrientsPlot.js') }}"></script>
 <script src="{{ url_for('static', filename='./plot2/plot2.js') }}"></script>
 
 {% endblock %}
