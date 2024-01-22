@@ -1,20 +1,30 @@
-// ref: https://d3-graph-gallery.com/graph/line_select.html
 // set the dimensions and margins of the graph
-const margin = {top: 10, right: 100, bottom: 30, left: 50},
-    width = 900 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+const margin = {top: 100, right: 50, bottom: 30, left: 50},
+    width = 800 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
 
+  const margin2 = {top2: 10, right2: 10, bottom2: 30, left2: 150},
+    width2 = 300 - margin2.left2 - margin2.right2,
+    height2 = 700 - margin2.top2 - margin2.bottom2;
 // append the svg object to the body of the page
 const svg = d3.select("#plotContainer")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", `translate(${margin.left},${margin.top})`);
+    .attr("transform",`translate(${margin.left},${margin.top})`);
+
+  const svg2 = d3.select("#textContainer")
+    .append("svg")
+      .attr("width", width2 + margin2.left2 + margin2.right2)
+      .attr("height", height2 + margin2.top2 + margin2.bottom2)
+    .append("g")
+      .attr("transform",`translate(${margin2.left2},${margin2.top2})`);
 
 //Read the data
-d3.csv(dataset).then( function(data) {
+d3.csv(dataset).then(function(data) {
 
+    // List of groups (here I have one group per column)
     const allGroup = ['northAmerican', 'mexican', 'american', 'canadian', 'hawaiian',
     'southwestern-united-states', 'asian', 'indian', 'german', 'european',
     'italian', 'southern-united-states', 'indonesian', 'pacific-northwest',
@@ -31,19 +41,35 @@ d3.csv(dataset).then( function(data) {
     'palestinian', 'norwegian', 'austrian', 'libyan', 'angolan', 'korean',
     'cambodian', 'mongolian'];
 
-    // adding options to the button
-    d3.select("#dynamicDropdown")
-      .selectAll('myOptions')
-     	.data(allGroup)
-      .enter()
-    	.append('option')
-      .text(function (d) { return d; }) 
-      .attr("value", function (d) { return d; })
+
+    // Reformat the data: we need an array of arrays of {x, y} tuples
+    const dataReady = allGroup.map( function(grpName) { // .map allows to do something for each element of the list
+      return {
+        name: grpName,
+        values: data.map(function(d) {
+          return {time: d.year, value: +d[grpName]};
+        })
+      };
+    });
+  
 
     // A color scale: one color for each group
     const myColor = d3.scaleOrdinal()
       .domain(allGroup)
-      .range(d3.schemeSet2);
+      .range(["#3957ff", "#d3fe14", "#c9080a", "#fec7f8", 
+      "#0b7b3e", "#0bf0e9", "#c203c8", "#fd9b39", "#888593", 
+      "#906407", "#98ba7f", "#fe6794", "#10b0ff", "#ac7bff", 
+      "#fee7c0", "#964c63", "#1da49c", "#0ad811", "#bbd9fd", 
+      "#fe6cfe", "#297192", "#d1a09c", "#78579e", "#81ffad", "#739400", 
+      "#ca6949", "#d9bf01", "#646a58", "#d5097e", "#bb73a9", "#ccf6e9",
+      "#9cb4b6", "#b6a7d4", "#9e8c62", "#6e83c8", "#01af64", "#a71afd",
+      "#cfe589", "#d4ccd1", "#fd4109", "#bf8f0e", "#2f786e", "#4ed1a5",
+      "#d8bb7d", "#a54509", "#6a9276", "#a4777a", "#fc12c9", "#606f15",
+      "#3cc4d9", "#f31c4e", "#73616f", "#f097c6", "#fc8772", "#92a6fe",
+      "#875b44", "#699ab3", "#94bc19", "#7d5bf0", "#d24dfe", "#c85b74",
+      "#68ff57", "#b62347", "#994b91", "#646b8c", "#977ab4", "#d694fd",
+      "#c4d5b5", "#fdc4bd", "#1cae05", "#7bd972", "#e9700a", "#d08f5d", 
+      "#8bb9e1", "#fde945"]);
 
     // Add X axis --> it is a date format
     const x = d3.scaleLinear()
@@ -55,48 +81,82 @@ d3.csv(dataset).then( function(data) {
 
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain( [0,7500])
+      .domain( [0,7000])
       .range([ height, 0 ]);
     svg.append("g")
       .call(d3.axisLeft(y));
 
-    // Initialize line with group a
-    const line = svg
-      .append('g')
-      .append("path")
-        .datum(data)
-        .attr("d", d3.line()
-          .x(function(d) { return x(+d.year) })
-          .y(function(d) { return y(+d.northAmerican) })
-        )
-        .attr("stroke", function(d){ return myColor("northAmerican") })
+    // Add the lines
+    const line = d3.line()
+      .x(d => x(+d.time))
+      .y(d => y(+d.value))
+    svg.selectAll("myLines")
+      .data(dataReady)
+      .join("path")
+        .attr("class", d => d.name)
+        .attr("d", d => line(d.values))
+        .attr("stroke", d => myColor(d.name))
         .style("stroke-width", 4)
         .style("fill", "none")
+        .style("opacity", 0);
 
-    // A function that update the chart
-    function update(selectedGroup) {
+    // Add the points
+    svg
+      // First we need to enter in a group
+      .selectAll("myDots")
+      .data(dataReady)
+      .join('g')
+        .style("fill", d => myColor(d.name))
+        .attr("class", d => d.name)
+        .style("opacity", 0)
+      // Second we need to enter in the 'values' part of this group
+      .selectAll("myPoints")
+      .data(d => d.values)
+      .join("circle")
+        .attr("cx", d => x(d.time))
+        .attr("cy", d => y(d.value))
+        .attr("r", 5)
+        .attr("class", d => d.name)
+        .attr("stroke", "white")
+        .style("opacity", 0)
+        
 
-      // Create new data with the selection
-      const dataFilter = data.map(function(d){return {time: d.year, value:d[selectedGroup]} })
+    // Add a label at the end of each line
+    /*   svg
+      .selectAll("myLabels")
+      .data(dataReady)
+      .join('g')
+        .append("text")
+          .attr("class", d => d.name)
+          .datum(d => { return {name: d.name, value: d.values[d.values.length - 1]}; }) // keep only the last value of each time series
+          .attr("transform", d => `translate(${x(d.value.time)},${y(d.value.value)})`) // Put the text at the position of the last point
+          .attr("x", (d, i) => d + 20)
+          .attr("y", (d, i) => d - i*40) // shift the text a bit more right
+          .text(d => d.name)
+          .style("fill", d => myColor(d.name))
+          .style("font-size", 15) 
+          .style("opacity", 0) */
 
-      // Give these new data to update line
-      line
-          .datum(dataFilter)
-          .transition()
-          .duration(1000)
-          .attr("d", d3.line()
-            .x(function(d) { return x(+d.time) })
-            .y(function(d) { return y(+d.value) })
-          )
-          .attr("stroke", function(d){ return myColor(selectedGroup) })
-    }
+    // Add a legend (interactive)
+    svg2.selectAll("myLegend")
+    .data(dataReady)
+    .join('g')
+    .append("foreignObject")
+      .attr('x', -120)
+      .attr('y', (d, i) => i * 20)
+      .attr('width', 250)
+      .attr("height", 200) // Set a fixed height for the scrollable container
+      .attr("viewBox", "0,0,150,420")
+      .style("overflow-y", "auto") // Enable vertical scrolling
+      .html(d => `<input type="checkbox" id="${d.name}" /> <label for="${d.name}">${d.name}</label>`)
+      .on("change", function (event, d) {
+        // Get the checkbox state
+        const isChecked = d3.select(this).select('input').property('checked');
+  
+        // Change the visibility of the corresponding lines based on the checkbox state
+        d3.selectAll("." + d.name).transition().style("opacity", isChecked ? 1 : 0);
+        d3.select(this).select('label').style("color", isChecked ? myColor(d.name) : "black");
+      });
 
-    // When the button is changed, run the updateChart function
-    d3.select("#dynamicDropdown").on("change", function(event,d) {
-        // recover the option that has been chosen
-        const selectedOption = d3.select(this).property("value")
-        // run the updateChart function with this selected option
-        update(selectedOption)
-    })
-
+      
 })
