@@ -159,4 +159,11 @@ Object.entries(allData).forEach(([cuisine, ingredientsData]) => {
         .on("mouseout", hideTooltip);
     });
 });
-  
+
+
+/*
+This heatmap shows the top 5 ingredients in each cuisine and their percentage of occurence in recipes 
+of such cuisine.
+The most used inrgedients are the basic ones such as salt or water. If we remove these basic ingredients 
+we get more into depth of what represents the cuisines of the world.
+*/
