@@ -31,11 +31,20 @@ def index():
 def introduction():
     return render_template('introduction.html')
 
+@app.route('/plotheatmap')
+def plotheatmap():
+    plot_data = load_plot1_data()
+    return render_template('plotheatmap.html',plot_data=plot_data)
+
+@app.route('/plotgeomaps')
+def plotgeomaps():
+    plot_data = load_plot1_data()
+    return render_template('plotgeomaps.html',plot_data=plot_data)
+
 @app.route('/plot/<int:plot_number>')
 def plot(plot_number):
     if (plot_number) == 1:
-        plot_data = load_plot1_data()
-        return render_template(f'plot{plot_number}.html', plot_data=plot_data)
+        return render_template(f'plot{plot_number}.html')
     elif (plot_number) == 2:
         plot_data = load_plot2_data()
         return render_template(f'plot{plot_number}.html', plot_data=plot_data)

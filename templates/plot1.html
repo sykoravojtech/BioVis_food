@@ -1,20 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script type="text/javascript" >
-    dataArray = {{ plot_data  | safe }};
-</script>
     <div id="textContainer">
         <h3>Ingredients in Cuisines</h3>
         <hr class="mainHR"/>
         <p>
             PLOT 1 Your introduction or plot description content here...
         </p>
+        <button onclick="executeLink('{{ url_for('plotheatmap') }}')">
+            HEATMAP
+        </button>
+        <button onclick="executeLink('{{ url_for('plotgeomaps') }}')">
+            GEOMAPS
+        </button>
     </div>
     <div id="plotContainer">
-        <svg id="heat-map"></svg>
-        <svg id="world-map"></svg>
-        <svg id="world-map2"></svg>
+        
+        {% block child_content %}{% endblock %}
     </div>
-    <script src="{{ url_for('static', filename='./plot1/geomaps.js') }}"></script>
+    <script>
+        // JavaScript function to execute the link when pressing the button
+        function executeLink(url) {
+            window.location.href = decodeURIComponent(url);
+        }
+    </script>
+    <!-- <script src="{{ url_for('static', filename='./plot1/heatmap.js') }}"></script> -->
 {% endblock %}

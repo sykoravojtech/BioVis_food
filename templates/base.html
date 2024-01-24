@@ -21,51 +21,59 @@
     </head>
     <body>
         <h1>Final Project: Food Database Analysis</h1>
+        <div id="menuContainer">
+            <ol>
+                <li>
+                    <button onclick="executeLink('{{ url_for('introduction') }}')">
+                        USER DATA SELECTION
+                    </button>
+                </li>
+                <hr />
+                <li>
+                    <button
+                        onclick="executeLink('{{ url_for('plot', plot_number=1) }}')"
+                    >
+                        INGREDIENT ANALYSIS
+                    </button>
+                </li>
+                <hr />
+                <li>
+                    <button
+                        onclick="executeLink('{{ url_for('plot', plot_number=2) }}')"
+                    >
+                        CUISINE STATS
+                    </button>
+                </li>
+                <hr />
+                <li>
+                    <button
+                        onclick="executeLink('{{ url_for('plot', plot_number=3) }}')"
+                    >
+                        POPULARITY ANALYSIS
+                    </button>
+                </li>
+                <hr />
+                <li>
+                    <button
+                        onclick="executeLink('{{ url_for('plot', plot_number=4) }}')"
+                    >
+                        PLOT 4
+                    </button>
+                </li>
+            </ol>
+        </div>
         <div id="mainContainer">
-            <div id="menuContainer">
-                <h2>Menu</h2>
+            <div id="selectionContainer">
+                <h2>Filter</h2>
                 <hr class="mainHR" />
-                <ol>
-                    <li>
-                        <button onclick="executeLink('{{ url_for('introduction') }}')">
-                            INTRODUCTION
-                        </button>
-                    </li>
-                    <hr />
-                    <li>
-                        <button
-                            onclick="executeLink('{{ url_for('plot', plot_number=1) }}')"
-                        >
-                            INGREDIENT ANALYSIS
-                        </button>
-                    </li>
-                    <hr />
-                    <li>
-                        <button
-                            onclick="executeLink('{{ url_for('plot', plot_number=2) }}')"
-                        >
-                            CUISINE STATS
-                        </button>
-                    </li>
-                    <hr />
-                    <li>
-                        <button
-                            onclick="executeLink('{{ url_for('plot', plot_number=3) }}')"
-                        >
-                            POPULARITY ANALYSIS
-                        </button>
-                    </li>
-                    <hr />
-                    <li>
-                        <button
-                            onclick="executeLink('{{ url_for('plot', plot_number=4) }}')"
-                        >
-                            PLOT 4
-                        </button>
-                    </li>
-                    <hr />
-                </ol>
+                <div id="plotFilterContainer">
+                    <h4>Select Plot Type</h4>
+                </div>
+                <div id="cuisineFilterContainer">
+                    <h4>Select Cuisines</h4>
+                </div>
             </div>
+            <hr />
             <div id="dataContainer">{% block content %}{% endblock %}</div>
         </div>
         <script>

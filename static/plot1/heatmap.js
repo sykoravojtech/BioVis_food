@@ -1,15 +1,18 @@
-const margin = { top: 30, right: 30, bottom: 70, left: 60 };
-const width = 1200 - margin.left - margin.right;
-const height = 1200 - margin.top - margin.bottom;
+const margin = { top: 10, right: 130, bottom: 50, left: 130 };
 allData = dataArray
-// console.log(allData)
+// Get the size of the container
+const containerWidth = document.getElementById("heat-map").clientWidth;
+const containerHeight = document.getElementById("heat-map").clientHeight;
 
+// Calculate the width and height based on the container size
+const width = containerWidth - margin.left - margin.right;
+const height = containerHeight - margin.top - margin.bottom;
+
+// Use the calculated width and height to set the viewBox
 const svg = d3.select("#heat-map")
   .append("svg")
-    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
-    .attr("preserveAspectRatio", "xMidYMid meet") // This will ensure the aspect ratio is maintained
-    // .attr("width", width + margin.left + margin.right)
-    // .attr("height", height + margin.top + margin.bottom)
+    .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
