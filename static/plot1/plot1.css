@@ -22,12 +22,27 @@
     fill:rgb(44, 173, 113);
 }
 
-/* svg {
-    display: block; /* Makes each SVG a block-level element */
-    margin: auto; /* Optionally centers the maps horizontally */
-} */
 
 #heat-map {
-  width: 1400px; /* Adjust as needed */
-  height: 1200px; /* Adjust as needed */
+  width: 95%;
+  height: 400%;
+}
+
+#textContainer button{
+  padding: 1.5%;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #3d4449;
+  background-color: #f5f6f7; /* Set your desired button background color */
+  cursor: pointer;
+  font-size: 1em;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#textContainer button:hover,
+button:focus {
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    background-color: white;
+    color: black;
+    font-weight: bold;
 }

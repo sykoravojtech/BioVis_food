@@ -1,0 +1,11 @@
+{% extends 'plot1.html' %}
+
+{% block child_content %}
+<script type="text/javascript" >
+    dataArray = {{ plot_data  | safe }};
+</script>
+<svg id="world-map"></svg>
+<svg id="world-map2"></svg>
+<script src="{{ url_for('static', filename='./plot1/geomaps.js') }}"></script>
+
+{% endblock %}

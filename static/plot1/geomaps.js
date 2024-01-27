@@ -345,3 +345,10 @@ svg2.append("text")
     console.error("Error loading the world map:", error);
 });
 
+/*
+These Choropleth maps show the top ingredient in each cuisine. 
+The top map has a separate color for each ingredient to easily view which countries share the top ingredient.
+The bottom map shows the percentage of recipes the top ingredient is included in. 
+This is to show which cuisines have many recipes sharing the same top ingredient. 
+The darker colored countries dont have much variety in their ingredient choice.  
+*/
