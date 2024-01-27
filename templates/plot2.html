@@ -1,20 +1,64 @@
 {% extends 'base.html' %} {% block content %}
 
 <div id="leftContainer">
-    <h3>Cuisine Statistics</h3>
+    <h3>Cuisine Stats</h3>
     <hr class="mainHR" />
     <div id="plotFilterContainer">
         <h4>Select Plot Type</h4>
         <select id="plotTypeDropdown">
-            <option value="Recipe Type Percentages">Recipe Type Percentages</option>
-            <option value="Nutrient PDV Percentages">Nutrient PDV Percentages</option>
+            <option value="Recipe Types">Recipe Types</option>
+            <option value="Nutrient PDV">Nutrient PDV</option>
         </select>
-    </div>
-    <div id="cuisineFilterContainer">
-        <h4>Select Cuisines</h4>
+        <h4 id="nutrientTypeTitle">Select Nutrient</h4>
+        <select id="nutrientTypeDropdown">
+            <option value="Total Fat">Total Fat</option>
+            <option value="Saturated Fat">Saturated Fat</option>
+            <option value="Carbohydrates">Carbohydrates</option>
+            <option value="Sugar">Sugar</option>
+            <option value="Protein">Protein</option>
+            <option value="Sodium">Sodium</option>
+        </select>
     </div>
     <div id="legendContainer">
         <h4>Legend</h4>
+        <h5>Recipe Types</h5>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #2ca25f"></div>
+            <div class="legendLabel">Vegan</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #99d8c9"></div>
+            <div class="legendLabel">Vegetarian</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #e5f5f9"></div>
+            <div class="legendLabel">Regular</div>
+        </div>
+        <h5>Nutrients</h5>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #1f78b4"></div>
+            <div class="legendLabel">Total Fat</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #a6cee3"></div>
+            <div class="legendLabel">Saturated Fat</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #ff7f00"></div>
+            <div class="legendLabel">Cabohydrates</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #fdbf6f"></div>
+            <div class="legendLabel">Sugar</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #e31a1c"></div>
+            <div class="legendLabel">Protein</div>
+        </div>
+        <div class="legendItem">
+            <div class="legendColor" style="background-color: #6a3d9a"></div>
+            <div class="legendLabel">Sodium</div>
+        </div>
     </div>
 </div>
 
@@ -30,10 +74,7 @@
 </script>
 
 <script src="{{ url_for('static', filename='./plot2/cuisinesList.js') }}"></script>
-<script src="{{ url_for('static', filename='./plot2/cuisinesTree.js') }}"></script>
-<script src="{{ url_for('static', filename='./plot2/plotType.js') }}"></script>
-<script src="{{ url_for('static', filename='./plot2/recipesPlot.js') }}"></script>
-<script src="{{ url_for('static', filename='./plot2/nutrientsPlot.js') }}"></script>
+
 <script src="{{ url_for('static', filename='./plot2/plot2.js') }}"></script>
 
 {% endblock %}

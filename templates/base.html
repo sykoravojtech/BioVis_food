@@ -13,10 +13,11 @@
             type="text/css"
             href="{{ url_for('static', filename='./plot2/plot2.css') }}"
         />
-        <link 
+        <link
             rel="stylesheet"
-            type="text/css" 
-            href="{{ url_for('static', filename='./plot1/plot1.css') }}">
+            type="text/css"
+            href="{{ url_for('static', filename='./plot1/plot1.css') }}"
+        />
         <title>VISUALIZATION OF BIOLOGICAL DATA FINAL PROJECT</title>
     </head>
     <body>
@@ -30,33 +31,25 @@
                 </li>
                 <hr />
                 <li>
-                    <button
-                        onclick="executeLink('{{ url_for('plot', plot_number=1) }}')"
-                    >
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=1) }}')">
                         INGREDIENT ANALYSIS
                     </button>
                 </li>
                 <hr />
                 <li>
-                    <button
-                        onclick="executeLink('{{ url_for('plot', plot_number=2) }}')"
-                    >
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=2) }}')">
                         CUISINE STATS
                     </button>
                 </li>
                 <hr />
                 <li>
-                    <button
-                        onclick="executeLink('{{ url_for('plot', plot_number=3) }}')"
-                    >
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=3) }}')">
                         POPULARITY ANALYSIS
                     </button>
                 </li>
                 <hr />
                 <li>
-                    <button
-                        onclick="executeLink('{{ url_for('plot', plot_number=4) }}')"
-                    >
+                    <button onclick="executeLink('{{ url_for('plot', plot_number=4) }}')">
                         PLOT 4
                     </button>
                 </li>
@@ -64,14 +57,9 @@
         </div>
         <div id="mainContainer">
             <div id="selectionContainer">
-                <h2>Filter</h2>
+                <h2>Cuisines</h2>
                 <hr class="mainHR" />
-                <div id="plotFilterContainer">
-                    <h4>Select Plot Type</h4>
-                </div>
-                <div id="cuisineFilterContainer">
-                    <h4>Select Cuisines</h4>
-                </div>
+                <div id="cuisineFilterContainer"></div>
             </div>
             <hr />
             <div id="dataContainer">{% block content %}{% endblock %}</div>

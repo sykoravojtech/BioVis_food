@@ -4,13 +4,13 @@
 }
 
 #centerContainer {
-    flex-basis: 60%;
+    flex-basis: 50%;
     padding-right: 1%;
     padding-left: 1%;
 }
 
 #rightContainer {
-    flex-basis: 20%;
+    flex-basis: 30%;
     padding-left: 2%;
 }
 
@@ -31,4 +31,23 @@ h4 {
     width: 80%;
     height: 25px;
     font-size: 13px;
+}
+
+#nutrientTypeDropdown {
+    width: 80%;
+    height: 25px;
+    font-size: 13px;
+}
+
+.legendItem {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.legendColor {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border: 1px solid #000;
 }
