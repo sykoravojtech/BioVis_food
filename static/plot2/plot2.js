@@ -1,7 +1,6 @@
 // ===================
 // Cuisine Tree: Initialization
 // ===================
-var checkedLabels = [];
 var container = d3.select("#cuisineFilterContainer");
 var scrollContainer = container
     .append("div")
@@ -92,7 +91,6 @@ function checkAction() {
             updateNutrientsPlot();
             break;
         default:
-            // Handle other cases if needed
             break;
     }
 }
@@ -117,6 +115,42 @@ let recipesScaleY = d3
     .range([0, recipesSvgHeight]);
 
 // ===================
+// Tool Tip
+// ===================
+
+const tooltip = d3
+    .select("body")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "black")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+    .style("color", "white");
+
+// ===================
+// Tool Tip: Functions
+// ===================
+
+const showTooltip = function (event, tooltipHtml) {
+    tooltip
+        .style("opacity", 0)
+        .html(tooltipHtml)
+        .style("left", event.pageX + 10 + "px")
+        .style("top", event.pageY + 10 + "px")
+        .transition()
+        .duration(200)
+        .style("opacity", 0.9);
+};
+
+const moveTooltip = function () {
+    tooltip.style("left", event.pageX + 10 + "px").style("top", event.pageY + 10 + "px");
+};
+const hideTooltip = function () {
+    tooltip.transition().duration(200).style("opacity", 0);
+};
+
+// ===================
 // Recipe Types Plot: Functions
 // ===================
 function renderRecipesPlot() {
@@ -125,7 +159,7 @@ function renderRecipesPlot() {
     const svg = d3.select("#plot");
 
     // Setting margins for better visualization
-    const margin = { top: 20, right: 30, bottom: 30, left: 100 };
+    const margin = { top: 20, right: 30, bottom: 40, left: 100 };
 
     // Setting SVG dimensions with margins
     svg.attr("width", recipesSvgWidth + margin.left + margin.right).attr(
@@ -167,7 +201,21 @@ function renderRecipesPlot() {
             if (checkedLabels.includes(d[0])) return recipesScaleX((d[3] / d[2]) * 100);
             else return 0;
         })
-        .attr("fill", "#2ca25f");
+        .attr("fill", "#2ca25f")
+        .on("mouseover", function (event, d) {
+            var tooltipHtml =
+                d[0] +
+                " Cuisine - " +
+                d[3] +
+                " Vegan Recipes (" +
+                ((d[3] / d[2]) * 100).toFixed(1) +
+                "%)";
+            showTooltip(event, tooltipHtml);
+        })
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip)
+        .on("click", displayCuisineDetails)
+        .style("cursor", "pointer");
 
     // Appending bars for 'vegetarian' category
     svg.append("g")
@@ -188,7 +236,21 @@ function renderRecipesPlot() {
             if (checkedLabels.includes(d[0])) return recipesScaleX((d[4] / d[2]) * 100);
             else return 0;
         })
-        .attr("fill", "#99d8c9");
+        .attr("fill", "#99d8c9")
+        .on("mouseover", function (event, d) {
+            var tooltipHtml =
+                d[0] +
+                " Cuisine - " +
+                d[4] +
+                " Vegetarian Recipes (" +
+                ((d[4] / d[2]) * 100).toFixed(1) +
+                "%)";
+            showTooltip(event, tooltipHtml);
+        })
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip)
+        .on("click", displayCuisineDetails)
+        .style("cursor", "pointer");
 
     // Appending bars for 'regular' category
     svg.append("g")
@@ -210,7 +272,21 @@ function renderRecipesPlot() {
                 return recipesScaleX(100 - (d[3] / d[2]) * 100 - (d[4] / d[2]) * 100);
             else return 0;
         })
-        .attr("fill", "#e5f5f9");
+        .attr("fill", "#e5f5f9")
+        .on("mouseover", function (event, d) {
+            var tooltipHtml =
+                d[0] +
+                " Cuisine - " +
+                (d[2] - d[3] - -d[4]) +
+                " Regular Recipes (" +
+                (100 - (d[3] / d[2]) * 100 - (d[4] / d[2]) * 100).toFixed(1) +
+                "%)";
+            showTooltip(event, tooltipHtml);
+        })
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip)
+        .on("click", displayCuisineDetails)
+        .style("cursor", "pointer");
 }
 
 function updateRecipesPlot() {
@@ -348,7 +424,22 @@ function renderNutrientsPlot() {
             const rgbaColor = d3.color(hexColor).copy({ opacity: alpha }).toString();
 
             return rgbaColor;
-        });
+        })
+        .on("mouseover", function (event, d) {
+            nutrient = d3.select("#nutrientTypeDropdown").property("value");
+            var tooltipHtml =
+                d[0] +
+                " Cuisine - " +
+                nutrient +
+                " PDV: " +
+                d[labelIndexMap[nutrient]].toFixed(1) +
+                "%";
+            showTooltip(event, tooltipHtml);
+        })
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip)
+        .on("click", displayCuisineDetails)
+        .style("cursor", "pointer");
 }
 
 function updateNutrientsPlot() {
@@ -428,3 +519,25 @@ function plotTypeChangeAction() {
 // Plot Selection: Initial Call
 // ===================
 plotTypeChangeAction();
+
+// ===================
+// Cuisine Details: Functions
+// ===================
+
+function displayCuisineDetails(event, d) {
+    // Assuming you have paragraph elements with IDs "cuisine-name", "avg-steps-value", etc.
+    let cuisineNameParagraph = d3.select("#cuisine-name-value");
+    let numRecipesParagraph = d3.select("#num-recipes-value");
+    let avgCaloriesParagraph = d3.select("#avg-calories-value");
+    let avgStepsParagraph = d3.select("#avg-steps-value");
+    let avgMinutesParagraph = d3.select("#avg-minutes-value");
+    let avgIngredientsParagraph = d3.select("#avg-ingredients-value");
+
+    // Update the paragraph elements with data from the clicked item
+    cuisineNameParagraph.transition().text(d[0] + " Cuisine");
+    numRecipesParagraph.transition().text(d[2] + " Recipes");
+    avgCaloriesParagraph.transition().text(d[9] + " Calories");
+    avgStepsParagraph.transition().text(d[5] + " Steps");
+    avgMinutesParagraph.transition().text(d[6] + " Minutes");
+    avgIngredientsParagraph.transition().text(d[7] + " Ingredients");
+}
