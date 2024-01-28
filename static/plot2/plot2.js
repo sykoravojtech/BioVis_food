@@ -90,6 +90,9 @@ function checkAction() {
         case "Nutrient PDV":
             updateNutrientsPlot();
             break;
+        case "Calories":
+            updateCaloriesPlot();
+            break;
         default:
             break;
     }
@@ -471,6 +474,186 @@ function updateNutrientsPlot() {
 }
 
 // ===================
+// Calories Plot: Dimensions and Scales
+// ===================
+let caloriesBarHeight = (window.innerHeight * 0.8) / dataset.length;
+let caloriesSvgWidth = window.innerWidth * 0.45;
+let caloriesSvgHeight = dataset.length * caloriesBarHeight;
+let caloriesScaleX = d3.scaleLinear().domain([0, 1400]).range([0, caloriesSvgWidth]);
+let caloriesScaleY = d3
+    .scaleBand()
+    .domain(dataset.map((d) => d[0]))
+    .range([0, caloriesSvgHeight]);
+
+// ===================
+// Calories Plot: Functions
+// ===================
+function renderCaloriesPlot() {
+    // Removing existing elements in the plot
+    d3.select("#plot").selectAll("*").remove();
+    const svg = d3.select("#plot");
+
+    // Setting margins for better visualization
+    const margin = { top: 20, right: 30, bottom: 30, left: 100 };
+
+    // Setting SVG dimensions with margins
+    svg.attr("width", caloriesSvgWidth + margin.left + margin.right).attr(
+        "height",
+        caloriesSvgWidth + margin.top + margin.bottom
+    );
+
+    // Appending X-axis with bottom alignment and adjusting font size
+    svg.append("g")
+        .attr(
+            "transform",
+            "translate(" + margin.left + "," + (caloriesSvgHeight + margin.top) + ")"
+        )
+        .call(d3.axisBottom(caloriesScaleX))
+        .selectAll("text")
+        .attr("font-size", "16px");
+
+    // Appending Y-axis with left alignment and adjusting font size
+    svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(d3.axisLeft(caloriesScaleY))
+        .selectAll("text")
+        .attr("font-size", "14.5px");
+
+    // Appending q10 bars
+    svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("class", "q10")
+        .attr("x", function (d, i) {
+            return caloriesScaleX(d[12]);
+        })
+        .attr("y", function (d, i) {
+            return i * caloriesBarHeight;
+        })
+        .attr("height", caloriesBarHeight - 2)
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return 2;
+            else return 0;
+        })
+        .attr("fill", "gray");
+
+    // Appending q90 bars
+    svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("class", "q90")
+        .attr("x", function (d, i) {
+            return caloriesScaleX(d[15]);
+        })
+        .attr("y", function (d, i) {
+            return i * caloriesBarHeight;
+        })
+        .attr("height", caloriesBarHeight - 2)
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return 2;
+            else return 0;
+        })
+        .attr("fill", "gray");
+
+    // Appending q2575 bars
+    svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("class", "q2575")
+        .attr("x", function (d, i) {
+            return caloriesScaleX(d[13]);
+        })
+        .attr("y", function (d, i) {
+            return i * caloriesBarHeight;
+        })
+        .attr("height", caloriesBarHeight - 2)
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return caloriesScaleX(d[14] - d[13]);
+            else return 0;
+        })
+        .attr("fill", "gray")
+        .on("mouseover", function (event, d) {
+            var tooltipHtml = d[0] + " Cuisine - Median: " + d[8] + " - Mean: " + d[9];
+            showTooltip(event, tooltipHtml);
+        })
+        .on("mousemove", moveTooltip)
+        .on("mouseout", hideTooltip)
+        .on("click", displayCuisineDetails)
+        .style("cursor", "pointer");
+
+    // Appending line bars
+    svg.append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr("class", "line")
+        .attr("x", function (d, i) {
+            return caloriesScaleX(d[12]);
+        })
+        .attr("y", function (d, i) {
+            return i * caloriesBarHeight + caloriesBarHeight / 2 - 1.5;
+        })
+        .attr("height", 1)
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return caloriesScaleX(d[15] - d[12]);
+            else return 0;
+        })
+        .attr("fill", "gray");
+}
+
+function updateCaloriesPlot() {
+    // Selecting the SVG container
+    const svg = d3.select("#plot");
+
+    // Transition for q10 bars
+    svg.transition()
+        .duration(500)
+        .selectAll("rect.q10")
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return 2;
+            else return 0;
+        });
+
+    // Transition for q90 bars
+    svg.transition()
+        .duration(500)
+        .selectAll("rect.q90")
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return 2;
+            else return 0;
+        });
+
+    // Transition for q2575 bars
+    svg.transition()
+        .duration(500)
+        .selectAll("rect.q2575")
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return caloriesScaleX(d[14] - d[13]);
+            else return 0;
+        });
+
+    // Transition for line bars
+    svg.transition()
+        .duration(500)
+        .selectAll("rect.line")
+        .attr("width", function (d) {
+            if (checkedLabels.includes(d[0])) return caloriesScaleX(d[15] - d[12]);
+            else return 0;
+        });
+}
+
+// ===================
 // Plot Selection: Initialization
 // ===================
 var selectedPlot = "Recipe Types";
@@ -498,6 +681,9 @@ function plotTypeChangeAction() {
             break;
         case "Nutrient PDV":
             renderNutrientsPlot();
+            break;
+        case "Calories":
+            renderCaloriesPlot();
             break;
         default:
             // Handle other cases if needed
