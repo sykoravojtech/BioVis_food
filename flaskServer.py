@@ -75,7 +75,7 @@ def plot(plot_number):
         plot_data = load_plot2_data()
         return render_template(f'plot{plot_number}.html', plot_data=plot_data, selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
     elif(plot_number) == 3:
-        return render_template(f'plot{plot_number}.html', plot_data="'../static/plot3/popularity.csv'", selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
+        return render_template(f'plot{plot_number}.html', plot_data="'../static/plot3/popularity_normalized.csv'", selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
     else:
         return render_template(f'plot{plot_number}.html', selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
 

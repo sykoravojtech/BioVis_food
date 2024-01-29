@@ -3,9 +3,10 @@ const margin = {top: 100, right: 50, bottom: 30, left: 50},
     width = 800 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
-  const margin2 = {top2: 10, right2: 10, bottom2: 30, left2: 150},
+const margin2 = {top2: 10, right2: 10, bottom2: 30, left2: 120},
     width2 = 300 - margin2.left2 - margin2.right2,
-    height2 = 700 - margin2.top2 - margin2.bottom2;
+    height2 = 1800 - margin2.top2 - margin2.bottom2;
+
 // append the svg object to the body of the page
 const svg = d3.select("#plotContainer")
   .append("svg")
@@ -14,7 +15,7 @@ const svg = d3.select("#plotContainer")
   .append("g")
     .attr("transform",`translate(${margin.left},${margin.top})`);
 
-  const svg2 = d3.select("#textContainer")
+const svg2 = d3.select("#textContainer")
     .append("svg")
       .attr("width", width2 + margin2.left2 + margin2.right2)
       .attr("height", height2 + margin2.top2 + margin2.bottom2)
@@ -24,7 +25,7 @@ const svg = d3.select("#plotContainer")
 //Read the data
 d3.csv(dataset).then(function(data) {
 
-    // List of groups (here I have one group per column)
+    // List of groups
     const allGroup = ['northAmerican', 'mexican', 'american', 'canadian', 'hawaiian',
     'southwestern-united-states', 'asian', 'indian', 'german', 'european',
     'italian', 'southern-united-states', 'indonesian', 'pacific-northwest',
@@ -43,15 +44,17 @@ d3.csv(dataset).then(function(data) {
 
 
     // Reformat the data: we need an array of arrays of {x, y} tuples
-    const dataReady = allGroup.map( function(grpName) { // .map allows to do something for each element of the list
+    const dataReady = allGroup.map( function(grpName) { 
       return {
         name: grpName,
         values: data.map(function(d) {
-          return {time: d.year, value: +d[grpName]};
+          return {time: parseInt(d.year), value: +parseFloat(d[grpName])};
         })
       };
     });
-  
+    
+    console.log(dataReady)
+
 
     // A color scale: one color for each group
     const myColor = d3.scaleOrdinal()
@@ -71,17 +74,27 @@ d3.csv(dataset).then(function(data) {
       "#c4d5b5", "#fdc4bd", "#1cae05", "#7bd972", "#e9700a", "#d08f5d", 
       "#8bb9e1", "#fde945"]);
 
-    // Add X axis --> it is a date format
+
+    //removing commas from the x axis year values
+    function customFormat(value) {
+        // Convert the value to a string and remove commas
+        return String(value).replace(/,/g, '');
+    }
+
+    // Add X axis
     const x = d3.scaleLinear()
       .domain([1999,2018])
       .range([ 0, width ]);
+
+    var xAxis = d3.axisBottom(x).tickFormat(customFormat);
+    
     svg.append("g")
       .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(x));
+      .call(xAxis);
 
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain( [0,7000])
+      .domain( [0,100])
       .range([ height, 0 ]);
     svg.append("g")
       .call(d3.axisLeft(y));
@@ -100,42 +113,7 @@ d3.csv(dataset).then(function(data) {
         .style("fill", "none")
         .style("opacity", 0);
 
-    // Add the points
-    svg
-      // First we need to enter in a group
-      .selectAll("myDots")
-      .data(dataReady)
-      .join('g')
-        .style("fill", d => myColor(d.name))
-        .attr("class", d => d.name)
-        .style("opacity", 0)
-      // Second we need to enter in the 'values' part of this group
-      .selectAll("myPoints")
-      .data(d => d.values)
-      .join("circle")
-        .attr("cx", d => x(d.time))
-        .attr("cy", d => y(d.value))
-        .attr("r", 5)
-        .attr("class", d => d.name)
-        .attr("stroke", "white")
-        .style("opacity", 0)
-        
 
-    // Add a label at the end of each line
-    /*   svg
-      .selectAll("myLabels")
-      .data(dataReady)
-      .join('g')
-        .append("text")
-          .attr("class", d => d.name)
-          .datum(d => { return {name: d.name, value: d.values[d.values.length - 1]}; }) // keep only the last value of each time series
-          .attr("transform", d => `translate(${x(d.value.time)},${y(d.value.value)})`) // Put the text at the position of the last point
-          .attr("x", (d, i) => d + 20)
-          .attr("y", (d, i) => d - i*40) // shift the text a bit more right
-          .text(d => d.name)
-          .style("fill", d => myColor(d.name))
-          .style("font-size", 15) 
-          .style("opacity", 0) */
 
     // Add a legend (interactive)
     svg2.selectAll("myLegend")
