@@ -56,10 +56,17 @@
             </ol>
         </div>
         <div id="mainContainer">
-            <div id="selectionContainer">
-                <h2>Cuisines</h2>
-                <hr class="mainHR" />
-                <div id="cuisineFilterContainer"></div>
+            <div id="formContainer">
+                <form action="/submit_cuisines" method="post">
+                    {% for continent, continent_cuisines in cuisines.items() %}
+                        <h3>{{ continent }}</h3>
+                        {% for cuisine in continent_cuisines %}
+                            <label><input type="checkbox" name="selected_cuisines" value="{{ cuisine }}" {{ "checked" if cuisine in selected_cuisines}} >{{ cuisine }}</label><br>
+                        {% endfor %}
+                    {% endfor %}
+                    <input type="submit" value="Submit" id="submission">
+                    <input type="hidden" name="plot_number" value = "{{ plot_number }}">
+                </form>
             </div>
             <hr />
             <div id="dataContainer">{% block content %}{% endblock %}</div>
