@@ -1,3 +1,63 @@
+const ingredientsToRemove = ['water', 'salt', 'sugar'];
+
+// Append divs for each checkbox, which will make them stack vertically
+const checkboxDivs = d3.select("#ingredientButtons").selectAll(".ingredient-checkbox-container")
+  .data(ingredientsToRemove)
+  .enter()
+  .append("div") // This div will cause each label to be on a new line
+    .attr("class", "ingredient-checkbox-container");
+
+// Append labels and checkboxes inside each div
+checkboxDivs.append("label")
+    .text(d => `Remove ${d}: `)
+    .append("input")
+    .attr("type", "checkbox")
+    .attr("class", "ingredient-checkbox")
+    .attr("value", d => d)
+    .property("checked", true) // Checkboxes are checked by default
+    .on("change", function(event, d) {
+      // 'this' is the DOM element, 'd' is the ingredient name
+      const isChecked = this.checked;
+      if (isChecked) {
+        // If checked, remove the ingredient from the filter list
+        filterData(d, false);
+      } else {
+        // If unchecked, add the ingredient to the filter list
+        filterData(d, true);
+      }
+});
+
+checkboxDivs.select("input").on("change", function(event, d) {
+    // 'this' is the DOM element, 'd' is the ingredient name
+    const isChecked = this.checked;
+    if (isChecked) {
+      // If checked, remove the ingredient from the filter list
+      console.log(d + " isChecked")
+      filterData(d, false);
+    } else {
+      // If unchecked, add the ingredient to the filter list
+      console.log(d + " isUnChecked")
+      filterData(d, true);
+    }
+  });
+  
+function filterData(ingredient, remove) {
+    if (remove) {
+        // Filter out the specified ingredient from allData
+        allData.forEach(cuisineData => delete cuisineData[ingredient]);
+    } else {
+        // Add back the specified ingredient to allData (you will need a way to retrieve the original data)
+        allData.forEach(cuisineData => cuisineData[ingredient] = originalData[cuisineData][ingredient]);
+    }
+    // Redraw the heatmap with the updated allData
+    redrawHeatmap();
+}
+
+
+
+
+
+
 // var ingredientData = dataArray;  // This should be your 'country_ingredient_map' data
 // https://geojson-maps.ash.ms/
 // ---------------------------//
@@ -261,10 +321,13 @@ Object.values(ingredientData).forEach(countryIngredients => {
 });
 let minValue = Math.min(...allValues);
 let maxValue = Math.max(...allValues);
+console.log("MIN VAL:" + minValue)
+console.log("MAX VAL:" + maxValue)
+
 
 // Create a sequential color scale with blue color
 const blueColorScale = d3.scaleSequential(d3.interpolateBlues)
-                            .domain([minValue, maxValue]);
+                            .domain([0, maxValue]);
 
 // Draw the countries with shades of blue for the second map
 svg2.selectAll("path")
@@ -279,7 +342,7 @@ svg2.selectAll("path")
         let maxKey = getMaxKey(ingredients);
         return blueColorScale(ingredients[maxKey]);
     }
-    return blueColorScale(0); // Default color for countries with no data
+    return blueColorScale(0.5); // Default color for countries with no data
     })
     .on("mouseover", showTooltip)
     .on("mousemove", moveTooltip)

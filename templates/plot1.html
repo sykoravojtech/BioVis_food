@@ -4,25 +4,33 @@
     <div id="textContainer">
         <h3>Ingredients in Cuisines</h3>
         <hr class="mainHR"/>
-        <p>
-            PLOT 1 Your introduction or plot description content here...
-        </p>
+        
+        <button id="geomapsButton" onclick="executeLink('{{ url_for('plotgeomaps') }}')">
+            GEOMAPS
+        </button>
         <button onclick="executeLink('{{ url_for('plotheatmap') }}')">
             HEATMAP
         </button>
-        <button onclick="executeLink('{{ url_for('plotgeomaps') }}')">
-            GEOMAPS
-        </button>
+        {% block child_content1 %}{% endblock %}
+        
     </div>
     <div id="plotContainer">
         
-        {% block child_content %}{% endblock %}
+        {% block child_content2 %}{% endblock %}
     </div>
     <script>
         // JavaScript function to execute the link when pressing the button
         function executeLink(url) {
             window.location.href = decodeURIComponent(url);
         }
+
+        // Function to simulate a click on the GEOMAPS button
+        function loadDefaultPlot() {
+            
+        }
+
+        // When the window loads, execute the function to load the default plot
+        window.onload = loadDefaultPlot;
     </script>
     <!-- <script src="{{ url_for('static', filename='./plot1/heatmap.js') }}"></script> -->
 {% endblock %}
