@@ -67,7 +67,7 @@ d3.csv(dataset).then(function(data) {
 
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain( [0,100])
+      .domain( [0,105])
       .range([ height, 0 ]);
     svg.append("g")
       .call(d3.axisLeft(y));
@@ -86,25 +86,23 @@ d3.csv(dataset).then(function(data) {
         .style("fill", "none")
         .style("opacity", 0);
 
-        svg
-        .selectAll("myDots")
+    svg.selectAll("myDots")
         .data(dataReady)
         .join('g')
           .style("fill", d => myColor(d.name))
+          .attr("class", d => d.name) 
         .selectAll("dot")
           .data(d => d.values)
           .join("circle")
             .attr("cx", d => x(d.time))
             .attr("cy", d => y(d.value))
             .attr("r", 5)
-            .attr("class", d => "circle" + d.name)
+            .attr("class", d => d.name)
             .style("opacity", 0)
 
-      
         // Get the form and all checkboxes
         var form = document.getElementById("formContainer");
         var checkboxes = form.querySelectorAll('input[type="checkbox"]');
-    
 
     
         // Add event listener to each checkbox
@@ -116,12 +114,14 @@ d3.csv(dataset).then(function(data) {
                 var label = checkbox.parentElement;
                 label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
                 d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
+                d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("opacity", checkbox.checked ? 1 : 0);
             });
 
             //initial state
             d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
             var label = checkbox.parentElement;
             label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
+            d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("opacity", checkbox.checked ? 1 : 0);
 
         });
     
