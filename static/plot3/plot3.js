@@ -97,7 +97,7 @@ d3.csv(dataset).then(function(data) {
             .attr("cx", d => x(d.time))
             .attr("cy", d => y(d.value))
             .attr("r", 5)
-            .attr("class", d => d.name)
+            .attr("class", d => "circle" + d.name)
             .style("opacity", 0)
 
       
@@ -105,18 +105,24 @@ d3.csv(dataset).then(function(data) {
         var form = document.getElementById("formContainer");
         var checkboxes = form.querySelectorAll('input[type="checkbox"]');
     
+
     
         // Add event listener to each checkbox
         checkboxes.forEach(function (checkbox) {
             var checkedLabel = checkbox.value.replace(' ',"-");
             checkbox.addEventListener("change", function () {
-                // Your logic to update the plot based on this specific checkbox
+              
                 console.log(checkedLabel)
+                var label = checkbox.parentElement;
+                label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
                 d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
             });
 
             //initial state
             d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
+            var label = checkbox.parentElement;
+            label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
+
         });
     
      
