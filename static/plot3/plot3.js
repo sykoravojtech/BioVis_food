@@ -3,10 +3,6 @@ const margin = {top: 100, right: 50, bottom: 30, left: 50},
     width = 800 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 
-const margin2 = {top2: 10, right2: 10, bottom2: 30, left2: 120},
-    width2 = 300 - margin2.left2 - margin2.right2,
-    height2 = 1800 - margin2.top2 - margin2.bottom2;
-
 // append the svg object to the body of the page
 const svg = d3.select("#plotContainer")
   .append("svg")
@@ -15,47 +11,12 @@ const svg = d3.select("#plotContainer")
   .append("g")
     .attr("transform",`translate(${margin.left},${margin.top})`);
 
-const svg2 = d3.select("#textContainer")
-    .append("svg")
-      .attr("width", width2 + margin2.left2 + margin2.right2)
-      .attr("height", height2 + margin2.top2 + margin2.bottom2)
-    .append("g")
-      .attr("transform",`translate(${margin2.left2},${margin2.top2})`);
-
 //Read the data
 d3.csv(dataset).then(function(data) {
-
-    // List of groups
-    const allGroup = ['northAmerican', 'mexican', 'american', 'canadian', 'hawaiian',
-    'southwestern-united-states', 'asian', 'indian', 'german', 'european',
-    'italian', 'southern-united-states', 'indonesian', 'pacific-northwest',
-    'polish', 'chinese', 'british-columbian', 'danish', 'scandinavian',
-    'swiss', 'swedish', 'french', 'african', 'australian', 'english',
-    'quebec', 'middle-eastern', 'lebanese', 'greek', 'south-american',
-    'russian', 'japanese', 'puerto-rican', 'spanish', 'irish', 'thai',
-    'polynesian', 'iraqi', 'pakistani', 'scottish', 'south-african',
-    'colombian', 'welsh', 'czech', 'filipino', 'cuban', 'belgian',
-    'costa-rican', 'guatemalan', 'finnish', 'moroccan', 'iranian-persian',
-    'turkish', 'portuguese', 'hungarian', 'georgian', 'brazilian',
-    'nigerian', 'ethiopian', 'ecuadorean', 'peruvian', 'egyptian',
-    'argentine', 'chilean', 'malaysian', 'nepalese', 'vietnamese',
-    'palestinian', 'norwegian', 'austrian', 'libyan', 'angolan', 'korean',
-    'cambodian', 'mongolian'];
-
-
-    // Reformat the data: we need an array of arrays of {x, y} tuples
-    const dataReady = allGroup.map( function(grpName) { 
-      return {
-        name: grpName,
-        values: data.map(function(d) {
-          return {time: parseInt(d.year), value: +parseFloat(d[grpName])};
-        })
-      };
-    });
     
-    console.log(dataReady)
-
-
+    // List of groups
+    const allGroup = data.columns.slice(1);
+    console.log(allGroup)
     // A color scale: one color for each group
     const myColor = d3.scaleOrdinal()
       .domain(allGroup)
@@ -72,8 +33,20 @@ d3.csv(dataset).then(function(data) {
       "#875b44", "#699ab3", "#94bc19", "#7d5bf0", "#d24dfe", "#c85b74",
       "#68ff57", "#b62347", "#994b91", "#646b8c", "#977ab4", "#d694fd",
       "#c4d5b5", "#fdc4bd", "#1cae05", "#7bd972", "#e9700a", "#d08f5d", 
-      "#8bb9e1", "#fde945"]);
-
+      "#8bb9e1", "#fde945"]);   
+      
+      
+    // Reformat the data: we need an array of arrays of {x, y} tuples
+    const dataReady = allGroup.map( function(grpName) { 
+      return {
+        name: grpName,
+        values: data.map(function(d) {
+          return {time: parseInt(d.year), value: +parseFloat(d[grpName])};
+        })
+      };
+    });
+    
+    console.log(dataReady)
 
     //removing commas from the x axis year values
     function customFormat(value) {
@@ -113,28 +86,38 @@ d3.csv(dataset).then(function(data) {
         .style("fill", "none")
         .style("opacity", 0);
 
-
-
-    // Add a legend (interactive)
-    svg2.selectAll("myLegend")
-    .data(dataReady)
-    .join('g')
-    .append("foreignObject")
-      .attr('x', -120)
-      .attr('y', (d, i) => i * 20)
-      .attr('width', 250)
-      .attr("height", 200) // Set a fixed height for the scrollable container
-      .attr("viewBox", "0,0,150,420")
-      .style("overflow-y", "auto") // Enable vertical scrolling
-      .html(d => `<input type="checkbox" id="${d.name}" /> <label for="${d.name}">${d.name}</label>`)
-      .on("change", function (event, d) {
-        // Get the checkbox state
-        const isChecked = d3.select(this).select('input').property('checked');
-  
-        // Change the visibility of the corresponding lines based on the checkbox state
-        d3.selectAll("." + d.name).transition().style("opacity", isChecked ? 1 : 0);
-        d3.select(this).select('label').style("color", isChecked ? myColor(d.name) : "black");
-      });
+        svg
+        .selectAll("myDots")
+        .data(dataReady)
+        .join('g')
+          .style("fill", d => myColor(d.name))
+        .selectAll("dot")
+          .data(d => d.values)
+          .join("circle")
+            .attr("cx", d => x(d.time))
+            .attr("cy", d => y(d.value))
+            .attr("r", 5)
+            .attr("class", d => d.name)
+            .style("opacity", 0)
 
       
+        // Get the form and all checkboxes
+        var form = document.getElementById("formContainer");
+        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    
+    
+        // Add event listener to each checkbox
+        checkboxes.forEach(function (checkbox) {
+            var checkedLabel = checkbox.value.replace(' ',"-");
+            checkbox.addEventListener("change", function () {
+                // Your logic to update the plot based on this specific checkbox
+                console.log(checkedLabel)
+                d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
+            });
+
+            //initial state
+            d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
+        });
+    
+     
 })
