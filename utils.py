@@ -134,10 +134,17 @@ def merge_garlic_with_garlic_cloves(cuisine_ingredients):
 
 def get_top_n_ingredients(mydict, n_ingreds = 5):
     for cuisine, ingredients in mydict.items():
-        # Select the top 5 ingredients
+        # Select the top N ingredients
         top_n_ingredients = dict(sorted(ingredients.items(), key=lambda item: item[1], reverse=True)[:n_ingreds])
         mydict[cuisine] = top_n_ingredients
     return mydict
+
+def filter_out_cuisines(ingredient_dict, selected_cuisines):
+    filtered_dict = {}
+    for cuisine, ingredients in ingredient_dict.items():
+        if (selected_cuisines != []) and (cuisine in selected_cuisines):
+            filtered_dict[cuisine] = ingredients
+    return filtered_dict
 
 def filter_out_ingredients(ingredient_dict, ignore_these):
     filtered_dict = {}

@@ -1,6 +1,14 @@
 {% extends 'plot1.html' %}
 
-{% block child_content %}
+{% block child_content1 %}
+<h2>Heatmap</h2>
+<p>
+    This heatmap shows the top 5 ingredients in each cuisine and their percentage of occurence in recipes of such cuisine.
+    The most used inrgedients are the basic ones such as salt or water. If we remove these basic ingredients we get more into depth of what represents the cuisines of the world.
+</p>
+{% endblock %}
+
+{% block child_content2 %}
 <script type="text/javascript" >
     dataArray = {{ plot_data  | safe }};
 </script>

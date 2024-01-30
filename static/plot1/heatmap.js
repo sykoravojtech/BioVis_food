@@ -1,4 +1,4 @@
-const margin = { top: 10, right: 130, bottom: 50, left: 130 };
+const margin = { top: 10, right: 50, bottom: 50, left: 130 };
 allData = dataArray
 // Get the size of the container
 const containerWidth = document.getElementById("heat-map").clientWidth;
@@ -11,7 +11,7 @@ const height = containerHeight - margin.top - margin.bottom;
 // Use the calculated width and height to set the viewBox
 const svg = d3.select("#heat-map")
   .append("svg")
-    .attr("viewBox", `0 0 ${containerWidth} ${containerHeight}`)
+    .attr("viewBox", `0 0 ${width} ${height}`)
     .attr("preserveAspectRatio", "xMidYMid meet")
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -80,7 +80,7 @@ const legendHeight = height / 2; // Adjust the height of the legend as needed
 const legendWidth = 15; // Width of the legend bar
 
 const colorLegend = svg.append("g")
-  .attr("transform", `translate(${width + margin.right + legendWidth}, ${margin.top})`);
+  .attr("transform", `translate(${width + margin.right + legendWidth-10}, ${margin.top})`);
 
 colorLegend.append("rect")
   .attr("width", legendWidth)
@@ -101,6 +101,7 @@ colorLegend.append("g")
   .attr("transform", `translate(${legendWidth}, 0)`)
   .selectAll("text")
   .style("text-anchor", "start")
+  .style("font-size", "14px") // Adjust the font size as needed
   .attr("x", 4) // Offset text to the right of the ticks
   .attr("dy", "-0.35em"); // Adjust text position relative to tick
 
