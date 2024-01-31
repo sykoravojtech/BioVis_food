@@ -1,85 +1,16 @@
 // ===================
-// Cuisine Tree: Initialization
+// Check Action
 // ===================
-var container = d3.select("#cuisineFilterContainer");
-var scrollContainer = container
-    .append("div")
-    .style("max-height", "70vh")
-    .style("overflow", "auto");
-var rootList = scrollContainer.append("ul");
-
-// ===================
-// Cuisine Tree: Functions
-// ===================
-function createCuisinesTree() {
-    for (var continent in cuisines) {
-        if (cuisines.hasOwnProperty(continent)) {
-            var continentItem = rootList.append("li");
-
-            // Create checkbox for continent
-            continentItem
-                .append("input")
-                .attr("type", "checkbox")
-                .attr("id", continent + "Checkbox")
-                .attr("class", "parentCheckbox")
-                .on("change", toggleChildren);
-
-            // Create label for continent
-            continentItem
-                .append("label")
-                .attr("for", continent + "Checkbox")
-                .text(continent);
-
-            // Create a ul for countries within each continent
-            var countryList = continentItem.append("ul").style("display", "none");
-
-            // Iterate over countries
-            for (var i = 0; i < cuisines[continent].length; i++) {
-                var countryItem = countryList.append("li");
-
-                // Create checkbox for country
-                countryItem
-                    .append("input")
-                    .attr("type", "checkbox")
-                    .attr("id", continent + "_" + i + "Checkbox")
-                    .attr("class", "childCheckbox")
-                    .on("change", checkAction);
-
-                // Create label for country
-                countryItem
-                    .append("label")
-                    .attr("for", continent + "_" + i + "Checkbox")
-                    .text(cuisines[continent][i]);
-            }
-        }
-    }
-}
-
-function toggleChildren() {
-    var parentDiv = d3.select(this.parentNode);
-    var childCheckboxes = parentDiv.selectAll("ul input.childCheckbox");
-    var childUl = parentDiv.select("ul");
-
-    if (this.checked) {
-        // Check all child checkboxes
-        childCheckboxes.property("checked", true).style("display", "inline-block");
-        childUl.style("display", "block");
-    } else {
-        // Uncheck all child checkboxes
-        childCheckboxes.property("checked", false).style("display", "none");
-        childUl.style("display", "none");
-    }
-
-    checkAction();
-}
 
 function checkAction() {
     checkedLabels = [];
 
     // Loop through all checkboxes
-    rootList.selectAll("input[type='checkbox']").each(function () {
-        if (this.checked) {
-            checkedLabels.push(d3.select("label[for='" + this.id + "']").text());
+    var form = document.getElementById("formContainer");
+    var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function (checkbox) {
+        if (checkbox.checked) {
+            checkedLabels.push(checkbox.value);
         }
     });
 
@@ -98,17 +29,17 @@ function checkAction() {
     }
 }
 
-// ===================
-// Cuisine Tree: Initial Call
-// ===================
-createCuisinesTree();
+// Add action
+var form = document.getElementById("formContainer");
+var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener("change", checkAction);
+});
 
 // ===================
 // Recipe Types Plot: Dimensions and Scales
 // ===================
-let { clientWidth: containerWidth, clientHeight: containerHeight } =
-    document.getElementById("centerContainer");
-let recipesBarHeight = (window.innerHeight * 0.8) / dataset.length;
+let recipesBarHeight = (window.innerHeight * 1.7) / dataset.length;
 let recipesSvgWidth = window.innerWidth * 0.45;
 let recipesSvgHeight = dataset.length * recipesBarHeight;
 let recipesScaleX = d3.scaleLinear().domain([0, 100]).range([0, recipesSvgWidth]);
@@ -162,7 +93,7 @@ function renderRecipesPlot() {
     const svg = d3.select("#plot");
 
     // Setting margins for better visualization
-    const margin = { top: 20, right: 30, bottom: 40, left: 100 };
+    const margin = { top: 20, right: 30, bottom: 100, left: 120 };
 
     // Setting SVG dimensions with margins
     svg.attr("width", recipesSvgWidth + margin.left + margin.right).attr(
@@ -178,14 +109,28 @@ function renderRecipesPlot() {
         )
         .call(d3.axisBottom(recipesScaleX))
         .selectAll("text")
-        .attr("font-size", "16px");
+        .attr("font-size", "20px");
 
     // Appending Y-axis with left alignment and adjusting font size
     svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .call(d3.axisLeft(recipesScaleY))
         .selectAll("text")
-        .attr("font-size", "14.5px");
+        .attr("font-size", "18px");
+
+    // Appending X-axis label
+    svg.append("text")
+        .attr(
+            "transform",
+            "translate(" +
+                (recipesSvgWidth / 2 + margin.left) +
+                "," +
+                (recipesSvgHeight + margin.top + 60) +
+                ")"
+        )
+        .style("text-anchor", "middle")
+        .text("Percentage")
+        .attr("font-size", "28px");
 
     // Appending bars for 'vegan' category
     svg.append("g")
@@ -354,7 +299,7 @@ var labelIndexMap = {
 // ===================
 // Nutrients Plot: Dimensions and Scales
 // ===================
-let nutrientsBarHeight = (window.innerHeight * 0.8) / dataset.length;
+let nutrientsBarHeight = (window.innerHeight * 1.7) / dataset.length;
 let nutrientsSvgWidth = window.innerWidth * 0.45;
 let nutrientsSvgHeight = dataset.length * nutrientsBarHeight;
 let nutrientsScaleX = d3.scaleLinear().domain([0, 130]).range([0, nutrientsSvgWidth]);
@@ -372,12 +317,12 @@ function renderNutrientsPlot() {
     const svg = d3.select("#plot");
 
     // Setting margins for better visualization
-    const margin = { top: 20, right: 30, bottom: 30, left: 100 };
+    const margin = { top: 20, right: 30, bottom: 100, left: 120 };
 
     // Setting SVG dimensions with margins
     svg.attr("width", nutrientsSvgWidth + margin.left + margin.right).attr(
         "height",
-        nutrientsSvgWidth + margin.top + margin.bottom
+        nutrientsSvgHeight + margin.top + margin.bottom
     );
 
     // Appending X-axis with bottom alignment and adjusting font size
@@ -388,14 +333,28 @@ function renderNutrientsPlot() {
         )
         .call(d3.axisBottom(nutrientsScaleX))
         .selectAll("text")
-        .attr("font-size", "16px");
+        .attr("font-size", "20px");
 
     // Appending Y-axis with left alignment and adjusting font size
     svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .call(d3.axisLeft(nutrientsScaleY))
         .selectAll("text")
-        .attr("font-size", "14.5px");
+        .attr("font-size", "18px");
+
+    // Appending X-axis label
+    svg.append("text")
+        .attr(
+            "transform",
+            "translate(" +
+                (nutrientsSvgWidth / 2 + margin.left) +
+                "," +
+                (nutrientsSvgHeight + margin.top + 60) +
+                ")"
+        )
+        .style("text-anchor", "middle")
+        .text("Percentage Daily Value (PDV)")
+        .attr("font-size", "28px");
 
     // Appending nutrient bars
     svg.append("g")
@@ -418,15 +377,7 @@ function renderNutrientsPlot() {
             } else return 0;
         })
         .attr("fill", function (d) {
-            const alpha =
-                d[labelIndexMap[d3.select("#nutrientTypeDropdown").property("value")]] /
-                100;
-
-            const hexColor =
-                labelColorMap[d3.select("#nutrientTypeDropdown").property("value")];
-            const rgbaColor = d3.color(hexColor).copy({ opacity: alpha }).toString();
-
-            return rgbaColor;
+            return labelColorMap[d3.select("#nutrientTypeDropdown").property("value")];
         })
         .on("mouseover", function (event, d) {
             nutrient = d3.select("#nutrientTypeDropdown").property("value");
@@ -461,22 +412,14 @@ function updateNutrientsPlot() {
             else return 0;
         })
         .attr("fill", function (d) {
-            const alpha =
-                d[labelIndexMap[d3.select("#nutrientTypeDropdown").property("value")]] /
-                100;
-
-            const hexColor =
-                labelColorMap[d3.select("#nutrientTypeDropdown").property("value")];
-            const rgbaColor = d3.color(hexColor).copy({ opacity: alpha }).toString();
-
-            return rgbaColor;
+            return labelColorMap[d3.select("#nutrientTypeDropdown").property("value")];
         });
 }
 
 // ===================
 // Calories Plot: Dimensions and Scales
 // ===================
-let caloriesBarHeight = (window.innerHeight * 0.8) / dataset.length;
+let caloriesBarHeight = (window.innerHeight * 1.7) / dataset.length;
 let caloriesSvgWidth = window.innerWidth * 0.45;
 let caloriesSvgHeight = dataset.length * caloriesBarHeight;
 let caloriesScaleX = d3.scaleLinear().domain([0, 1400]).range([0, caloriesSvgWidth]);
@@ -494,12 +437,12 @@ function renderCaloriesPlot() {
     const svg = d3.select("#plot");
 
     // Setting margins for better visualization
-    const margin = { top: 20, right: 30, bottom: 30, left: 100 };
+    const margin = { top: 20, right: 30, bottom: 100, left: 120 };
 
     // Setting SVG dimensions with margins
     svg.attr("width", caloriesSvgWidth + margin.left + margin.right).attr(
         "height",
-        caloriesSvgWidth + margin.top + margin.bottom
+        caloriesSvgHeight + margin.top + margin.bottom
     );
 
     // Appending X-axis with bottom alignment and adjusting font size
@@ -517,7 +460,21 @@ function renderCaloriesPlot() {
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .call(d3.axisLeft(caloriesScaleY))
         .selectAll("text")
-        .attr("font-size", "14.5px");
+        .attr("font-size", "18px");
+
+    // Appending X-axis label
+    svg.append("text")
+        .attr(
+            "transform",
+            "translate(" +
+                (caloriesSvgWidth / 2 + margin.left) +
+                "," +
+                (caloriesSvgHeight + margin.top + 60) +
+                ")"
+        )
+        .style("text-anchor", "middle")
+        .text("Calories")
+        .attr("font-size", "28px");
 
     // Appending q10 bars
     svg.append("g")
