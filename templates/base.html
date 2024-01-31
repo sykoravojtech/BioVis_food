@@ -57,11 +57,21 @@
         </div>
         <div id="mainContainer">
             <div id="formContainer">
-                <form action="/submit_cuisines" method="post">
+                <form id= "selection-form" action="/submit_cuisines" method="post">
+                    <label>
+                        <input type="checkbox" id="checkAll" onclick="checkAllBoxes()">
+                        Select All
+                    </label>
                     {% for continent, continent_cuisines in cuisines.items() %}
                         <h3>{{ continent }}</h3>
+                        <label>
+                            <input type="checkbox" class = "selection-checkboxes" id = "checkContinent{{ continent }}" onclick="checkCuisine(this)" data-cuisine="{{ continent.replace(' ','') }}">
+                            Select All {{ continent }}
+                        </label>
+                    </br>
+                    </br>
                         {% for cuisine in continent_cuisines %}
-                            <label><input type="checkbox" name="selected_cuisines" value="{{ cuisine }}" {{ "checked" if cuisine in selected_cuisines}} >{{ cuisine }}</label><br>
+                            <label><input type="checkbox" class = "{{ continent.replace(' ','') }} selection-checkboxes cuisinecheckboxes" name="selected_cuisines" value="{{ cuisine }}" {{ "checked" if cuisine in selected_cuisines}} >{{ cuisine }}</label><br>
                         {% endfor %}
                     {% endfor %}
                     <input type="submit" value="Submit" id="submission">
@@ -73,8 +83,35 @@
         </div>
         <script>
             // JavaScript function to execute the link when pressing the button
-            function executeLink(url) {
+            async function executeLink(url) {
+                const posturl = "/submit_cuisines";
+                await fetch(posturl, {
+                    method : "POST",
+                    body: new FormData(document.getElementById("selection-form")),
+                });
                 window.location.href = decodeURIComponent(url);
+            }
+
+            // JavaScript function to check/uncheck all checkboxes
+            function checkAllBoxes() {
+                const event = new Event("change");
+                var checkboxes = document.getElementsByClassName("selection-checkboxes");
+                var selectAllCheckbox = document.getElementById("checkAll");
+                for (var i = 0; i < checkboxes.length; i++) {
+                    checkboxes[i].checked = selectAllCheckbox.checked;
+                    checkboxes[i].dispatchEvent(event);
+                }
+            }
+            
+            // JavaScript function to check/uncheck all checkboxes of a continent
+            function checkCuisine(checkbox) {
+                const event = new Event("change");
+                var continent = checkbox.getAttribute("data-cuisine");
+                var cuisineCheckboxes = document.querySelectorAll(`.${continent}`);
+                for (var i = 0; i < cuisineCheckboxes.length; i++) {
+                    cuisineCheckboxes[i].checked = checkbox.checked;
+                    cuisineCheckboxes[i].dispatchEvent(event);
+                }
             }
         </script>
     </body>
