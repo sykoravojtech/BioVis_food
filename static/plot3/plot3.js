@@ -90,6 +90,41 @@ d3.csv(dataset).then(function(data) {
     var form = document.getElementById("formContainer");
     var checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
+    const tooltip = d3.select("body")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "black")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+    .style("color", "white")
+    
+
+    const showTooltip = function(event, d) {
+      
+        let tooltipHtml = `</strong>Popularity score: <strong>${d.value}</strong><br>Year: <strong>${d.time}</strong>`;
+
+        tooltip
+            .html(tooltipHtml)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY + 10) + "px")
+            .transition()
+            .duration(200)
+            .style("opacity", 0.9);
+    };
+
+    const moveTooltip = function(event) {
+    tooltip
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY + 10) + "px");
+    };
+
+    const hideTooltip = function() {
+    tooltip
+        .transition()
+        .duration(200)
+        .style("opacity", 0);
+    };
     //Add dots
     svg.selectAll("myDots")
         .data(dataReady)
@@ -104,18 +139,25 @@ d3.csv(dataset).then(function(data) {
             .attr("r", 5)
             .attr("class", d => d.name)
             .style("display", "none")
-            .on("mouseover", function(d) {
+            .on("mouseover", function(event, d) {
                 if(d3.select(this).style("display")=="block"){
                 d3.select(this)
                 .transition()
                 .attr("r", 8);
+
+                showTooltip(event,d);
                 }
-            })
+           
+                }
+            )
+            .on("mousemove", moveTooltip)
             .on("mouseleave", function(d) {
               if(d3.select(this).style("display")=="block"){
               d3.select(this)
               .transition()
               .attr("r", 5);
+
+              hideTooltip();
               }
           })
 
