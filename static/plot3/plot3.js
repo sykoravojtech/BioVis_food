@@ -1,4 +1,4 @@
-// set the dimensions and margins of the graph
+//set the dimensions and margins of the graph
 const margin = {top: 100, right: 50, bottom: 30, left: 50},
     width = 800 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
@@ -14,12 +14,13 @@ const svg = d3.select("#plotContainer")
 //Read the data
 d3.csv(dataset).then(function(data) {
     
-    // List of groups
-    const allGroup = data.columns.slice(1);
-    console.log(allGroup)
+    // List of cuisines
+    const cuisines = data.columns.slice(1);
+    console.log(cuisines)
+    
     // A color scale: one color for each group
-    const myColor = d3.scaleOrdinal()
-      .domain(allGroup)
+    const colorScale = d3.scaleOrdinal()
+      .domain(cuisines)
       .range(["#3957ff", "#d3fe14", "#c9080a", "#fec7f8", 
       "#0b7b3e", "#0bf0e9", "#c203c8", "#fd9b39", "#888593", 
       "#906407", "#98ba7f", "#fe6794", "#10b0ff", "#ac7bff", 
@@ -37,7 +38,7 @@ d3.csv(dataset).then(function(data) {
       
       
     // Reformat the data: we need an array of arrays of {x, y} tuples
-    const dataReady = allGroup.map( function(grpName) { 
+    const dataReady = cuisines.map( function(grpName) { 
       return {
         name: grpName,
         values: data.map(function(d) {
@@ -50,7 +51,6 @@ d3.csv(dataset).then(function(data) {
 
     //removing commas from the x axis year values
     function customFormat(value) {
-        // Convert the value to a string and remove commas
         return String(value).replace(/,/g, '');
     }
 
@@ -81,15 +81,20 @@ d3.csv(dataset).then(function(data) {
       .join("path")
         .attr("class", d => d.name)
         .attr("d", d => line(d.values))
-        .attr("stroke", d => myColor(d.name))
+        .attr("stroke", d => colorScale(d.name))
         .style("stroke-width", 4)
         .style("fill", "none")
         .style("opacity", 0);
 
+    // Get the form and all checkboxes
+    var form = document.getElementById("formContainer");
+    var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+    //Add dots
     svg.selectAll("myDots")
         .data(dataReady)
         .join('g')
-          .style("fill", d => myColor(d.name))
+          .style("fill", d => colorScale(d.name))
           .attr("class", d => d.name) 
         .selectAll("dot")
           .data(d => d.values)
@@ -98,11 +103,21 @@ d3.csv(dataset).then(function(data) {
             .attr("cy", d => y(d.value))
             .attr("r", 5)
             .attr("class", d => d.name)
-            .style("opacity", 0)
-
-        // Get the form and all checkboxes
-        var form = document.getElementById("formContainer");
-        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+            .style("display", "none")
+            .on("mouseover", function(d) {
+                if(d3.select(this).style("display")=="block"){
+                d3.select(this)
+                .transition()
+                .attr("r", 8);
+                }
+            })
+            .on("mouseleave", function(d) {
+              if(d3.select(this).style("display")=="block"){
+              d3.select(this)
+              .transition()
+              .attr("r", 5);
+              }
+          })
 
     
         // Add event listener to each checkbox
@@ -112,16 +127,16 @@ d3.csv(dataset).then(function(data) {
               
                 console.log(checkedLabel)
                 var label = checkbox.parentElement;
-                label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
+                label.style.color = checkbox.checked ? colorScale(checkedLabel) : '#333';
                 d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
-                d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("opacity", checkbox.checked ? 1 : 0);
+                d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("display", checkbox.checked ? "block" : "none");
             });
 
             //initial state
             d3.selectAll("." + checkedLabel).transition().style("opacity", checkbox.checked ? 1 : 0);
             var label = checkbox.parentElement;
-            label.style.color = checkbox.checked ? myColor(checkedLabel) : '#333';
-            d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("opacity", checkbox.checked ? 1 : 0);
+            label.style.color = checkbox.checked ? colorScale(checkedLabel) : '#333';
+            d3.selectAll("." + checkedLabel).selectAll("circle").transition().style("display", checkbox.checked ? "block" : "none");
 
         });
     
