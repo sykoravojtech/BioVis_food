@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import json
-from utils import get_top_n_ingredients, filter_out_cuisines
+from utils import get_top_n_ingredients, filter_out_cuisines, filter_out_ingredients
 
 # Write functions to retrieve the data of each plot
 def load_plot2_data():
@@ -12,8 +12,8 @@ def load_plot1_data(selected_cuisines): # heatmap
         ingredient_perc_dict = json.load(file)
     
     # Remove the basic ingredients like salt and water
-    # filtered_cuisine_ingredient_dict = filter_out_ingredients(ingredient_perc_dict, 
-    #                                                           ignore_these=["salt", "water", "sugar"])
+    ingredient_perc_dict = filter_out_ingredients(ingredient_perc_dict, 
+                                                  ignore_these=["salt", "water", "sugar"])
     
     # New dictionary for top 5 ingredients of each cuisine
     my_selected_cuisines = [x.lower() for x in selected_cuisines]

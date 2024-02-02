@@ -1,3 +1,6 @@
+// ==================================
+// HEATMAP
+// ==================================
 const margin = { top: 10, right: 50, bottom: 50, left: 130 };
 allData = dataArray
 // Get the size of the container
@@ -16,11 +19,13 @@ const svg = d3.select("#heat-map")
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-// Assuming allData is already loaded from your Flask application
+// Assuming allData is already loaded from Flask application
 const cuisines = Object.keys(allData);
 const ingredients = [...new Set(Object.values(allData).flatMap(d => Object.keys(d)))];
 
-//  ======== SCALING AND AXES ========
+// ==================================
+// SCALING AND AXES
+// ==================================
 const x = d3.scaleBand()
   .range([0, width])
   .domain(ingredients)
@@ -31,7 +36,8 @@ svg.append("g")
   .call(d3.axisBottom(x))
   .selectAll("text")
     .attr("transform", "translate(-10,0)rotate(-45)")
-    .style("text-anchor", "end");
+    .style("text-anchor", "end")
+    .style("font-size", "14px");
 
 const y = d3.scaleBand()
   .range([height, 0])
@@ -39,14 +45,16 @@ const y = d3.scaleBand()
   .padding(0.05);
   
 svg.append("g")
-    .call(d3.axisLeft(y));
+    .call(d3.axisLeft(y))
+    .style("font-size", "14px");
 
 const colorScale = d3.scaleSequential()
     .interpolator(d3.interpolateBlues)
     .domain([0, 10]); // Assuming the maximum percentage is 10
 
-
-//  ======== RECTANGLE CELLS OF HEATMAP ========
+// ==================================
+// RECTANGLE CELLS OF HEATMAP
+// ==================================
 Object.entries(allData).forEach(([cuisine, ingredientsData]) => {
   Object.entries(ingredientsData).forEach(([ingredient, percentage]) => {
     svg.append("rect")
@@ -58,8 +66,9 @@ Object.entries(allData).forEach(([cuisine, ingredientsData]) => {
   });
 });
 
-
-// ======== COLOR LEGEND ========
+// ==================================
+// COLOR LEGEND
+// ==================================
 const defs = svg.append("defs");
 
 const linearGradient = defs.append("linearGradient")
@@ -87,7 +96,9 @@ colorLegend.append("rect")
   .attr("height", legendHeight)
   .style("fill", "url(#linear-gradient)");
 
-// ======== COLOR LEGEND AXES ========
+// ==================================
+// COLOR LEGEND AXES
+// ==================================
 const colorLegendScale = d3.scaleLinear()
   .domain(d3.extent(colorScale.domain())) // Use the full extent of your color scale domain
   .range([legendHeight, 0]);
@@ -109,8 +120,9 @@ colorLegend.append("g")
 d3.select("#heat-map svg")
   .attr("viewBox", `0 0 ${width + margin.left + margin.right + legendWidth + 40} ${height + margin.top + margin.bottom}`);
 
-
-// ======== TOOLTIP ========
+// ==================================
+// TOOLTIP
+// ==================================
 const tooltip = d3.select("body").append("div")
   .attr("class", "tooltip")
   .style("opacity", 0)
@@ -135,13 +147,13 @@ const showTooltip = function(event, d) {
 };
 
 const moveTooltip = function(event, d) {
-tooltip
+  tooltip
     .style("left", (event.pageX + 10) + "px")
     .style("top", (event.pageY + 10) + "px");
 };
 
 const hideTooltip = function(event, d) {
-tooltip
+  tooltip
     .transition()
     .duration(200)
     .style("opacity", 0);
@@ -163,11 +175,3 @@ Object.entries(allData).forEach(([cuisine, ingredientsData]) => {
         .on("mouseout", hideTooltip);
     });
 });
-
-
-/*
-This heatmap shows the top 5 ingredients in each cuisine and their percentage of occurence in recipes 
-of such cuisine.
-The most used inrgedients are the basic ones such as salt or water. If we remove these basic ingredients 
-we get more into depth of what represents the cuisines of the world.
-*/
