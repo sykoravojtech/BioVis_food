@@ -1,69 +1,9 @@
-const ingredientsToRemove = ['water', 'salt', 'sugar'];
-
-// Append divs for each checkbox, which will make them stack vertically
-const checkboxDivs = d3.select("#ingredientButtons").selectAll(".ingredient-checkbox-container")
-  .data(ingredientsToRemove)
-  .enter()
-  .append("div") // This div will cause each label to be on a new line
-    .attr("class", "ingredient-checkbox-container");
-
-// Append labels and checkboxes inside each div
-checkboxDivs.append("label")
-    .text(d => `Remove ${d}: `)
-    .append("input")
-    .attr("type", "checkbox")
-    .attr("class", "ingredient-checkbox")
-    .attr("value", d => d)
-    .property("checked", true) // Checkboxes are checked by default
-    .on("change", function(event, d) {
-      // 'this' is the DOM element, 'd' is the ingredient name
-      const isChecked = this.checked;
-      if (isChecked) {
-        // If checked, remove the ingredient from the filter list
-        filterData(d, false);
-      } else {
-        // If unchecked, add the ingredient to the filter list
-        filterData(d, true);
-      }
-});
-
-checkboxDivs.select("input").on("change", function(event, d) {
-    // 'this' is the DOM element, 'd' is the ingredient name
-    const isChecked = this.checked;
-    if (isChecked) {
-      // If checked, remove the ingredient from the filter list
-      console.log(d + " isChecked")
-      filterData(d, false);
-    } else {
-      // If unchecked, add the ingredient to the filter list
-      console.log(d + " isUnChecked")
-      filterData(d, true);
-    }
-  });
-  
-function filterData(ingredient, remove) {
-    if (remove) {
-        // Filter out the specified ingredient from allData
-        allData.forEach(cuisineData => delete cuisineData[ingredient]);
-    } else {
-        // Add back the specified ingredient to allData (you will need a way to retrieve the original data)
-        allData.forEach(cuisineData => cuisineData[ingredient] = originalData[cuisineData][ingredient]);
-    }
-    // Redraw the heatmap with the updated allData
-    redrawHeatmap();
-}
-
-
-
-
-
-
-// var ingredientData = dataArray;  // This should be your 'country_ingredient_map' data
+// geojson map data from
 // https://geojson-maps.ash.ms/
-// ---------------------------//
+
+// ==================================
 // CHANGE CUISINE NAME TO COUNTRY NAME
-// ---------------------------//
-// import { cuisine_country_map } from './cuisineCountryMap.js';
+// ==================================
 const cuisine_country_map = {
     'angolan': 'Angola',
     'argentine': 'Argentina',
@@ -146,9 +86,9 @@ function transformCuisineToCountry(data, keymap) {
 
 let ingredientData = transformCuisineToCountry(dataArray, cuisine_country_map);
 
-// ---------------------------//
-//      TOOLTIP               //
-// ---------------------------//
+// ==================================
+// TOOLTIP
+// ==================================
 
 // -1- Create a tooltip div that is hidden by default:
 const tooltip = d3.select("body")
@@ -211,18 +151,19 @@ tooltip
 function colorBasedOnIngredient(ingredient) {
     // Define a color mapping for ingredients
     var colors = {
-        "butter": "#264653", // dark blue: usa, canada
-        "soy sauce": "#2a9d8f", // cyan
-        "olive oil": "#e9c46a", // yellow
-        "onion" : "#f4a261", // orange
-        "tomatoes" : "#e76f51", // red
-        "fish sauce" : "#a2d2ff", // light blue
-        "garlic" : "#ffafcc", // pink
-        "turmeric" : "#a3b18a", // light green
-        "oil" : "#3a5a40", // dark green    MAYBE COMBINE WITH OIL?
-        "salt": "#bdba3c",
-        "water": "#07e47a",
-        "sugar": "#6d0ad6"
+        "butter": "#FFD700",
+        "soy sauce": "#3F250B",
+        "olive oil": "#9A9738",
+        "onion": "#9955BB",
+        "tomatoes": "#FF6347",
+        "fish sauce": "#8B572A",
+        "garlic": "#878484",
+        "turmeric": "#ff9e0c",
+        "oil": "#D1C45A",
+        "salt": "#CCCCCC",
+        "water": "#7EB6FF",
+        "sugar": "#F0F0F0",
+        "sour cream": "#ebddae",
         // Add more mappings as needed
     };
     return colors[ingredient] || "#eee"; // Default color for unknown ingredients
@@ -242,9 +183,9 @@ return scale(value);
 }
 
 
-// ---------------------------//
-//          MAIN 1            //
-// ---------------------------//
+// ==================================
+// MAP 1: Top ingredient color
+// ==================================
 MAP_X = 1100
 MAP_Y = 500
 
@@ -282,28 +223,15 @@ svg.selectAll("path")
     })
     .on("mouseover", showTooltip)
     .on("mousemove", moveTooltip)
-    .on("mouseout", hideTooltip)
-    // THIS IS A POOR MANS TOOLTIP
-    // .append("title")  // Append a title element to each path
-    // .text(function(d) {
-    //   var country = d.properties.name;
-    //   var ingredients = ingredientData[country];
-    //   if (typeof ingredients !== 'undefined') {
-    //     let maxIngredient = Object.keys(ingredients).reduce((a, b) => ingredients[a] > ingredients[b] ? a : b);
-    //     return country + ": " + maxIngredient + " (" + ingredients[maxIngredient] + ")";
-    //   } else {
-    //     return country + ": No data";
-    //   }
-    // })
-    ;
+    .on("mouseout", hideTooltip);
 }).catch(function(error) {
     console.error("Error loading the world map:", error);
 });
 
 
-// ---------------------------//
-//          MAIN 2            //
-// ---------------------------//
+// ==================================
+// MAP 2: Top ingredient percentage
+// ==================================
 
 // Load the GeoJSON data for the world map (assuming it's already loaded for the first map)
 d3.json("../static/plot1/countries_world.json").then(function(world) {
@@ -321,9 +249,8 @@ Object.values(ingredientData).forEach(countryIngredients => {
 });
 let minValue = Math.min(...allValues);
 let maxValue = Math.max(...allValues);
-console.log("MIN VAL:" + minValue)
-console.log("MAX VAL:" + maxValue)
-
+// console.log("MIN VAL:" + minValue)
+// console.log("MAX VAL:" + maxValue)
 
 // Create a sequential color scale with blue color
 const blueColorScale = d3.scaleSequential(d3.interpolateBlues)
@@ -407,11 +334,3 @@ svg2.append("text")
 }).catch(function(error) {
     console.error("Error loading the world map:", error);
 });
-
-/*
-These Choropleth maps show the top ingredient in each cuisine. 
-The top map has a separate color for each ingredient to easily view which countries share the top ingredient.
-The bottom map shows the percentage of recipes the top ingredient is included in. 
-This is to show which cuisines have many recipes sharing the same top ingredient. 
-The darker colored countries dont have much variety in their ingredient choice.  
-*/

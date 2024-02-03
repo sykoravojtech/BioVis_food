@@ -2,14 +2,55 @@
 
 {% block child_content1 %}
 <h2>Choropleth maps (Geographical maps)</h2>
-<p>
-    These Choropleth maps show the top ingredient in each cuisine. 
-The top map has a separate color for each ingredient to easily view which countries share the top ingredient.
-The bottom map shows the percentage of recipes the top ingredient is included in. 
-This is to show which cuisines have many recipes sharing the same top ingredient. 
-The darker colored countries dont have much variety in their ingredient choice. 
-</p>
-<div id="ingredientButtons"></div>
+<p>These Choropleth maps show the <b>top ingredient in each cuisine</b>.</p>
+<p>The <b>top map</b> has a separate color for each ingredient to easily view which countries share the top ingredient.</p>
+<p>The <b>bottom map</b> shows the percentage of recipes the top ingredient is included in.</p>
+<p>This is to show which cuisines have many recipes sharing the same top ingredient. </p>
+<p>The darker colored countries don't have much variety in their ingredient choice. </p>
+<p>Water, salt, and sugar were removed from the dataset to make space for 'real' ingredients.</p>
+
+<h5>Ingredients (Top Map)</h5>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #FFD700"></div>
+    <div class="legendLabel">butter</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #3F250B"></div>
+    <div class="legendLabel">soy sauce</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #9A9738"></div>
+    <div class="legendLabel">olive oil</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #9955BB"></div>
+    <div class="legendLabel">onion</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #FF6347"></div>
+    <div class="legendLabel">tomatoes</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #878484"></div>
+    <div class="legendLabel">garlic</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #ebddae"></div>
+    <div class="legendLabel">sour cream</div>
+</div>
+<!-- <div class="legendItem">
+    <div class="legendColor" style="background-color: #CCCCCC"></div>
+    <div class="legendLabel">salt</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #7EB6FF"></div>
+    <div class="legendLabel">water</div>
+</div>
+<div class="legendItem">
+    <div class="legendColor" style="background-color: #F0F0F0"></div>
+    <div class="legendLabel">sugar</div>
+</div> -->
+
 {% endblock %}
 
 {% block child_content2 %}

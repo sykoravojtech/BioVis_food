@@ -2,15 +2,17 @@
 
 {% block content %}
     <div id="textContainer">
-        <h3>Ingredients in Cuisines</h3>
+        <h2>Ingredients in Cuisines</h2>
         <hr class="mainHR"/>
         
-        <button id="geomapsButton" onclick="executeLink('{{ url_for('plotgeomaps') }}')">
-            GEOMAPS
-        </button>
-        <button onclick="executeLink('{{ url_for('plotheatmap') }}')">
-            HEATMAP
-        </button>
+        <div class="buttons-container">
+            <button class="plot1Button" onclick="executeLink('{{ url_for('plotgeomaps') }}')">
+                GEOMAPS
+            </button>
+            <button class="plot1Button" onclick="executeLink('{{ url_for('plotheatmap') }}')">
+                HEATMAP
+            </button>
+        </div>
         {% block child_content1 %}{% endblock %}
         
     </div>
