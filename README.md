@@ -65,11 +65,12 @@ heatmap
     - all ratings
    
 # How to run
-'''bash
+```bash
+#clone repo (this is with ssh key)
 git clone git@github.com:sykoravojtech/BioVis_food.git
 
 python3 flaskServer.py
-'''
+```
 Then copy the server link to your preferred browser.
 
 # Final submission
