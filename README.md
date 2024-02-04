@@ -27,42 +27,31 @@ Since this dataset included various different data each team member focused on o
       
 # Dataset
 We took a kaggle dataset which scraped data from https://www.food.com/
+
 Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions
   
-# Columns of Preprocessing
-- RAW_recipes
-  - name
-  - id
-  - minutes
-  - submitted
-  - tags
-    - cuisine
-    - Vegan
-    - Vegetarian
-  - nutrition
-  - n_steps
-  - ingredients
-  - n_ingredients
-- RAW_interactions
-  - for each recipe extra columns
-    - all dates
-    - all ratings
-   
-# How to run
-```bash
-#clone repo (this is with ssh key)
-git clone git@github.com:sykoravojtech/BioVis_food.git
-
-cd BioVis_food
-
-python3 flaskServer.py
-```
-Then copy the server link to your preferred browser.
+## Columns of Preprocessing
+`dataset.csv`
+- Recipe Name: The name of the recipe.
+- Recipe ID: A unique identifier for each recipe.
+- Minutes: The preparation time for the recipe.
+- Submission Date: Date when the recipe was submitted.
+- Nutrition: Nutritional information of the recipe.
+- Number of Steps: The number of steps involved in the recipe.
+- Ingredients: List of ingredients used in the recipe.
+- Number of Ingredients: The total count of ingredients in each recipe.
+- Rating Dates: Dates when the recipe was rated.
+- Ratings: Ratings given to the recipe.
+- Number of Ratings: The total count of ratings for each recipe.
+- Cuisine Tags: The cuisine(s) associated with the recipe.
+- Vegan: Whether the recipe is vegan.
+- Vegetarian: Whether the recipe is vegetarian.
 
 ## How to run    
 ```bash
 # clone project   
 git clone https://github.com/sykoravojtech/BioVis_food
+cd BioVis_food
 ```
 ```bash
 # install dependencies in your environment
