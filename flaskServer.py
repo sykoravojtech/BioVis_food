@@ -83,7 +83,7 @@ def plot(plot_number):
     elif(plot_number) == 3:
         return render_template(f'plot{plot_number}.html', plot_data="'../static/plot3/popularity_normalized.csv'", selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
     else:
-        return render_template(f'plot{plot_number}.html', selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
+        return render_template(f'plot{plot_number}.html', plot_data = "'../static/plot4/output_narrow_100.csv'",selected_cuisines = selected_cuisines, cuisines = cuisines, plot_number = plot_number)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

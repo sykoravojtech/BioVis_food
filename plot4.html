@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script type="text/javascript" >
+    dataArray = {{ plot_data  | safe }};
+</script>
+    <!-- Tooltip element -->
+    <div id="tooltip" class="tooltip4"></div>
+        
+    <div class="plot4" style="display: inline-block;">
+        <div style="float:left;width:15%;" >
+            <h3 style="font-size:16px" >Filter by ingredients</h3>
+            <select class="plot4-select" id="ingredientSelect" multiple></select>
+            <h3 style="font-size:16px" >Filter by continents </h3>
+            <select class="plot4-select" id="continentSelect" multiple></select>
+        </div>
+        <div style="float:left;width:75%;" >
+            <!-- SVG container for the scatter plot -->
+            <svg id="ScatterPlot"></svg>
+        </div>
+        <div>
+            <ul  class="plotLegnad legend4 legend-line">
+                <li> North America </li> 
+                <li> European </li>
+                <li> Oceanian </li>
+                <li> Asian </li>
+                <li> African </li>
+                <li> South American </li>
+              </ul>
+        </div>
+       
+    </div>
+    <script src="{{ url_for('static', filename='./plot4/plot4.js') }}"></script>
+{% endblock %}
