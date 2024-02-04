@@ -1,0 +1,50 @@
+.tooltip4 {
+    position: absolute;
+    background-color: black;
+    padding: 10px;
+    display: none;
+    color: white;
+}
+.plot4 {
+    margin: 50px;
+}
+.plot4-select {
+    margin-right: 5px;
+    margin-bottom: 5px; 
+    width:3.5cm;
+}
+
+#ScatterPlot{
+    padding-left: 3%;
+}
+
+.legend4 {
+    color: #ccc;
+    background-color: white;
+    opacity: 60%;
+    width: 3cm;
+    height: 3.8cm;
+    position:absolute;
+    left:350px;
+    top: 550px;
+}
+
+.legend4 > li:nth-of-type(1) {
+    color: #32a852;;
+}
+
+.legend4 > li:nth-of-type(2) {
+    color:#f7eb0a;
+}
+.legend4 > li:nth-of-type(3) {
+    color:  #f70a16;
+}
+.legend4 > li:nth-of-type(4) {
+    color:   #a00af7;
+ }
+.legend4 > li:nth-of-type(5) {
+    color: #ed0ebd;
+}
+.legend4 > li:nth-of-type(6) {
+    color: #081078;
+}
