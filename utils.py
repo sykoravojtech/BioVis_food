@@ -198,39 +198,3 @@ def convert_counts_to_perc_and_sort(mydict):
         perc_dict[cuisine] = {k: round((v / total) * 100, 2) for k, v in sorted(ingredients.items(), key=lambda item: item[1], reverse=True)}
     return perc_dict
 
-# Initialize the categories dictionary
-categories = {
-    'Dairy': [],
-    'Spices_Herbs': [],
-    'Proteins': [],
-    'Vegetables_Fruits': [],
-    'Grains_Carbs': [],
-    'Sauces': [],
-    'Others': []
-}
-
-# Define keywords for each category
-dairy_keywords = ['milk', 'cheese', 'butter', 'cream', 'yogurt', 'parmesan', 'cheddar', 'mozzarella']
-spices_herbs_keywords = ['spice', 'herb', 'pepper', 'salt', 'cinnamon', 'garlic', 'oregano', 'basil', 'paprika', 'turmeric', 'ginger']
-proteins_keywords = ['chicken', 'beef', 'pork', 'tofu', 'beans', 'lentils', 'fish', 'shrimp', 'egg', 'turkey', 'lamb']
-vegetables_fruits_keywords = ['lettuce', 'tomato', 'apple', 'berry', 'potato', 'onion', 'carrot', 'peas', 'broccoli', 'cucumber', 'grape', 'banana']
-grains_carbs_keywords = ['wheat', 'rice', 'bread', 'pasta', 'flour', 'oat', 'noodle', 'barley', 'corn']
-sauces_keywords = ['sauce', 'ketchup', 'mayonnaise', 'dressing', 'soy sauce', 'hot sauce', 'mustard', 'fish sauce']
-
-# Modify the categorize_ingredient function to include the new keywords
-def categorize_ingredient(ingredient):
-    ingredient = ingredient.lower()
-    if any(dairy in ingredient for dairy in dairy_keywords):
-        return 'Dairy'
-    elif any(spice in ingredient for spice in spices_herbs_keywords):
-        return 'Spices_Herbs'
-    elif any(protein in ingredient for protein in proteins_keywords):
-        return 'Proteins'
-    elif any(vegfruit in ingredient for vegfruit in vegetables_fruits_keywords):
-        return 'Vegetables_Fruits'
-    elif any(grain in ingredient for grain in grains_carbs_keywords):
-        return 'Grains_Carbs'
-    elif any(sauce in ingredient for sauce in sauces_keywords):
-        return 'Sauces'
-    else:
-        return 'Others'

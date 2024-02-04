@@ -129,7 +129,7 @@ function renderRecipesPlot() {
                 ")"
         )
         .style("text-anchor", "middle")
-        .text("Percentage")
+        .text("Recipe Percentage")
         .attr("font-size", "28px");
 
     // Appending bars for 'vegan' category
@@ -225,7 +225,7 @@ function renderRecipesPlot() {
             var tooltipHtml =
                 d[0] +
                 " Cuisine - " +
-                (d[2] - d[3] - -d[4]) +
+                (d[2] - d[3] - d[4]) +
                 " Regular Recipes (" +
                 (100 - (d[3] / d[2]) * 100 - (d[4] / d[2]) * 100).toFixed(1) +
                 "%)";
