@@ -31,10 +31,7 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
 The most popular ingredients are usually salt, water or sugar so if we ignore these we get a heatmap and a map showing a much better representation of the culture 
 ![top_5_ingredients_heatmap](visuals/top_5_ingredients_heatmap.png)
 ![top_ingredients_map](visuals/top_ingredients_map.png)
-**TODO**
-- [ ] add a checklist to add or remove salt, sugar, water from the graph
-- [ ] Group ingredients by type (spices, dairy, proteins, etc.) to see if there are overarching patterns in ingredient usage across different cuisines.
-- [ ] MAYBE? Create a network graph that shows connections between cuisines and ingredients, with the thickness of the lines indicating the strength of association.
+
 
 Global map
 - [x] make it in d3.js
@@ -66,6 +63,17 @@ heatmap
   - for each recipe extra columns
     - all dates
     - all ratings
+   
+# How to run
+```bash
+#clone repo (this is with ssh key)
+git clone git@github.com:sykoravojtech/BioVis_food.git
+
+cd BioVis_food
+
+python3 flaskServer.py
+```
+Then copy the server link to your preferred browser.
 
 # Final submission
 - [ ] Interactive website
