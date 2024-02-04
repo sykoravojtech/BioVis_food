@@ -47,6 +47,17 @@ Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and
   - for each recipe extra columns
     - all dates
     - all ratings
+   
+# How to run
+```bash
+#clone repo (this is with ssh key)
+git clone git@github.com:sykoravojtech/BioVis_food.git
+
+cd BioVis_food
+
+python3 flaskServer.py
+```
+Then copy the server link to your preferred browser.
 
 ## How to run    
 ```bash
