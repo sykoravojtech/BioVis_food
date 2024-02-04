@@ -1,73 +1,67 @@
-# BioVis_food
+<div align="center">    
+ 
+# food.com analysis
+## Visualization of Biological Data Project 
+</div>
 
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#description">Description</a></li>
+    <li><a href="#goal-of-the-project">Goal of the Project</a></li>
+    <li><a href="#dataset">Dataset</a></li>
+    <li><a href="#columns-of-preprocessing">Columns of Preprocessing</a></li>
+    <li><a href="#how-to-run">How to run </a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+## Description
 Cooking is one of the most common and (ful)filling hobbies. Especially since the last two years
 of lockdowns and restrictions, more people started experimenting in their chemical laboratories
 known as kitchens. And what probably many of you know well, after a few weeks of home cooking we need to boost our inspiration, unless we want to make the same meals over and over again.
 
-# TODO
-- [x] main preprocessing DANIEL
-- [ ] formulate the questions better (type of plot, which data)
-  - [ ] Which combination of ingredients are most prevalent in each cuisine? VOJTA
-  - [ ] Comparative analysis of cuisines (nutritional value, number of steps/ingredients, preparation time, and number of vegan/vegetarian recipes) DANIEL
-- [ ] webpage template 
-  - [ ] layout, which questions are connected CARLA 
-- [ ] visualize each question 
-- [ ] popularity analysis of the cuisines over time MELIS
+## Goal of the Project
+Since this dataset included various different data each team member focused on one topic. We explored what are the most popular ingredients in each cuisine and the percentage of recipes they are used in shown on a map corresponding to the cuisines' country. We wanted to see which combination of ingredients most prevalent around the world so we used a heatmap to explore that question. We explored the ratio of vegan to vegetarian to regular recipes. We compared the use of each nutrient in cuisines and the average amount of calories. We explored the popularity of cuisines over the years.
       
-# Dataset food.com
+# Dataset
 We took a kaggle dataset which scraped data from https://www.food.com/
+
 Kaggle dataset: https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions
-
-# Questions
-- Which combination of ingredients are most prevalent in each cuisine?
-- Graph analysis of the similarity of cuisines based on their similar ingredients. Amal
-- Which cuisine requires the most __ on average?
-  - ingredients
-  - steps
-  - prep time
-- The popularity of cuisines over time.
   
-## Q1: Which combination of ingredients are most prevalent in each cuisine?
-The most popular ingredients are usually salt, water or sugar so if we ignore these we get a heatmap and a map showing a much better representation of the culture 
-![top_5_ingredients_heatmap](visuals/top_5_ingredients_heatmap.png)
-![top_ingredients_map](visuals/top_ingredients_map.png)
-**TODO**
-- [ ] add a checklist to add or remove salt, sugar, water from the graph
-- [ ] Group ingredients by type (spices, dairy, proteins, etc.) to see if there are overarching patterns in ingredient usage across different cuisines.
-- [ ] MAYBE? Create a network graph that shows connections between cuisines and ingredients, with the thickness of the lines indicating the strength of association.
+## Columns of Preprocessing
+`dataset.csv`
+- Recipe Name: The name of the recipe.
+- Recipe ID: A unique identifier for each recipe.
+- Minutes: The preparation time for the recipe.
+- Submission Date: Date when the recipe was submitted.
+- Nutrition: Nutritional information of the recipe.
+- Number of Steps: The number of steps involved in the recipe.
+- Ingredients: List of ingredients used in the recipe.
+- Number of Ingredients: The total count of ingredients in each recipe.
+- Rating Dates: Dates when the recipe was rated.
+- Ratings: Ratings given to the recipe.
+- Number of Ratings: The total count of ratings for each recipe.
+- Cuisine Tags: The cuisine(s) associated with the recipe.
+- Vegan: Whether the recipe is vegan.
+- Vegetarian: Whether the recipe is vegetarian.
 
-Global map
-- [x] make it in d3.js
-- [x] on hover over add 
-  - [ ] an image of the top ingredient 
-  - [x] and the top 5 list of ingredients
-- [x] use a force-directed layout for the text labels or interactive elements that reveal the text upon hovering
+## How to run    
+```bash
+# clone project   
+git clone https://github.com/sykoravojtech/BioVis_food
+cd BioVis_food
+```
+```bash
+# install dependencies in your environment
+pip install flask, pandas
+```
+```bash
+# either run 'run.cmd' or directly the flashServer.py
+python flaskServer.py
+# open the link to the website which will be given to you in the console
+```
 
-heatmap
-- [ ] make it in d3.js
-- [ ] add annotations to highlight outliers or specially interesting data points
-- [ ] add buttons to see only ticked continents
-
-# Columns of preprocessing
-- RAW_recipes
-  - name
-  - id
-  - minutes
-  - submitted
-  - tags
-    - cuisine
-    - Vegan
-    - Vegetarian
-  - nutrition
-  - n_steps
-  - ingredients
-  - n_ingredients
-- RAW_interactions
-  - for each recipe extra columns
-    - all dates
-    - all ratings
-
-# Final submission
-- [ ] Interactive website
-- [ ] presentation
-- [ ] GitHub documentation
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
