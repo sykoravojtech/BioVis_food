@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Scatter Plot 4</title>
+                <script src="https://d3js.org/d3.v7.min.js"></script>
+                <style>
+                    /* CSS styles for the tooltip */
+                    .tooltip {
+                        position: absolute;
+                        background-color: white;
+                        border: 1px solid black;
+                        padding: 10px;
+                        display: none;
+                    }
+                    .plot4 {
+                        margin: 50px;
+                    }
+                    .plot4-select {
+                        margin-right: 5px;
+                        margin-bottom: 5px;
+                        
+                        
+                    }
+                </style>
+            </head>
+    <body>
+        <!-- Tooltip element -->
+        <div id="tooltip" class="tooltip"></div>
+        
+        <div class="plot4" style="display: inline-block;">
+            <div style="float:left;width:15%;" >
+                <h3 style="font-size:16px" >Filter by ingredients</h3>
+                <select class="plot4-select" id="ingredientSelect" multiple></select>
+                <h3 style="font-size:16px" >Filter by continents </h3>
+                <select class="plot4-select" id="continentSelect" multiple></select>
+            </div>
+            <div style="float:left;width:75%;" >
+                <!-- SVG container for the scatter plot -->
+                <svg id="ScatterPlot" width="800" height="600"></svg>
+            </div>
+        </div>
+        <script src="./plot4.js">
+            
+        </script>
+    </body>
+</html>
