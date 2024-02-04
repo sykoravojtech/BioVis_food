@@ -6,7 +6,7 @@ var selectedContinents = []
 
 //Get JSON file for continents
 function fetchContinentsData() {
-    fetch("./continents.json")
+    fetch("../static/plot4/continents.json")
     .then((res) => {
         if (!res.ok) {
             throw new Error
@@ -66,7 +66,7 @@ d3.select("#continentSelect").on("change", function(event,d) {
 
 function updateChart() {
     // Load data from CSV file
-    d3.csv("output_narrow_100.csv").then(d => {
+    d3.csv(dataArray).then(d => {
         
         // Set up SVG dimensions
         var data = d

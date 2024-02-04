@@ -70,6 +70,7 @@ button:focus {
 #plotContainer {
     flex-basis: 70%;
     padding-left: 2%;
+    padding-right: 1%;
 }
 
 ol {

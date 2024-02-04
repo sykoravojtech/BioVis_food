@@ -18,6 +18,11 @@
             type="text/css"
             href="{{ url_for('static', filename='./plot1/plot1.css') }}"
         />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='./plot4/plot4.css') }}"
+        />
         <title>VISUALIZATION OF BIOLOGICAL DATA FINAL PROJECT</title>
         <style>
             a {
@@ -39,7 +44,7 @@
             <ol>
                 <li>
                     <button onclick="executeLink('{{ url_for('introduction') }}')">
-                        USER DATA SELECTION
+                        PROJECT DESCRIPTION
                     </button>
                 </li>
                 <hr />
@@ -63,7 +68,7 @@
                 <hr />
                 <li>
                     <button onclick="executeLink('{{ url_for('plot', plot_number=4) }}')">
-                        PLOT 4
+                        CUISINES' SIMILARITIES
                     </button>
                 </li>
             </ol>
