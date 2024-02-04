@@ -1,3 +1,4 @@
+//ref: https://d3-graph-gallery.com/
 //set the dimensions and margins of the graph
 const margin = {top: 100, right: 50, bottom: 30, left: 50},
     width = 800 - margin.left - margin.right,
@@ -90,6 +91,7 @@ d3.csv(dataset).then(function(data) {
     var form = document.getElementById("formContainer");
     var checkboxes = form.querySelectorAll('input[type="checkbox"]');
 
+    //Tooltip
     const tooltip = d3.select("body")
     .append("div")
     .style("opacity", 0)
@@ -125,6 +127,7 @@ d3.csv(dataset).then(function(data) {
         .duration(200)
         .style("opacity", 0);
     };
+
     //Add dots
     svg.selectAll("myDots")
         .data(dataReady)
