@@ -65,3 +65,6 @@ python flaskServer.py
 
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
+
+## Members
+Carla López Martínez - carla-lm
