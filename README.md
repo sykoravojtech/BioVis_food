@@ -69,3 +69,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Members
 Carla López Martínez: carla-lm
+Daniel Eskandar: Daniel-Eskandar
