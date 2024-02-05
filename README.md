@@ -23,7 +23,7 @@ of lockdowns and restrictions, more people started experimenting in their chemic
 known as kitchens. And what probably many of you know well, after a few weeks of home cooking we need to boost our inspiration, unless we want to make the same meals over and over again.
 
 ## Goal of the Project
-Since this dataset included various different data each team member focused on one topic. We explored what are the most popular ingredients in each cuisine and the percentage of recipes they are used in shown on a map corresponding to the cuisines' country. We wanted to see which combination of ingredients most prevalent around the world so we used a heatmap to explore that question. We explored the ratio of vegan to vegetarian to regular recipes. We compared the use of each nutrient in cuisines and the average amount of calories. We explored the popularity of cuisines over the years.
+Since this dataset included various different data each team member focused on one topic. We explored what are the most popular ingredients in each cuisine and the percentage of recipes they are used in shown on a map corresponding to the cuisines' country. We wanted to see which combination of ingredients most prevalent around the world so we used a heatmap to explore that question. We explored the ratio of vegan to vegetarian to regular recipes. We compared the use of each nutrient in cuisines and the average amount of calories. We explored the popularity of cuisines over the years. We also explored how cuisines and continents are similar based on their ingredients. 
       
 # Dataset
 We took a kaggle dataset which scraped data from https://www.food.com/
