@@ -112,9 +112,9 @@ if (typeof countryData === 'object' && countryData !== null) {
 
     topIngredients.forEach((ingredient, index) => {
         if (index === 0) { // Check if it's the first row
-        tooltipHtml += "<tr><td><strong>" + (index + 1) + ": " + ingredient[0] + "</strong></td><td><strong>= " + ingredient[1].toFixed(2) + "</strong></td></tr>";
+        tooltipHtml += "<tr><td><strong>" + (index + 1) + ": " + ingredient[0] + "</strong></td><td><strong>= " + ingredient[1].toFixed(2) + "%</strong></td></tr>";
         } else {
-            tooltipHtml += "<tr><td>" + (index + 1) + ": " + ingredient[0] + "</td><td>= " + ingredient[1].toFixed(2) + "</td></tr>";
+            tooltipHtml += "<tr><td>" + (index + 1) + ": " + ingredient[0] + "</td><td>= " + ingredient[1].toFixed(2) + "%</td></tr>";
         }
     });
 } else {
