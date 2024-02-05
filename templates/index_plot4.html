@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Scatter Plot 4</title>
+                <script src="https://d3js.org/d3.v7.min.js"></script>
+                <style>
+                    /* CSS styles for the tooltip */
+                    .tooltip {
+                        position: absolute;
+                        background-color: #fff;
+                        border: 1px solid black;
+                        background:transparent;
+                        padding: 10px;
+                        display: none;
+                    }
+                    .plot4 {
+                        margin: 50px;
+                       
+                    }
+                    .plot4-select {
+                        margin-right: 5px;
+                        margin-bottom: 5px;
+                        width:3.5cm;
+                        overflow: auto;  
+                        height: 5cm;
+                        scroll-behavior: smooth;
+                        overflow: scroll;        
+                    }
+                   
+                        .legend {
+                        color: #ccc;
+                        background-color: white;
+                       
+                        width: 3cm;
+                        height: 3.8cm;
+                        position:absolute;
+                        top:30px;
+                        right:200px
+                        }
+            
+                    .legend > li:nth-of-type(1) {
+                        color: #32a852;;
+                    }
+                    
+                    .legend > li:nth-of-type(2) {
+                        color:#f7eb0a;
+                    }
+                    .legend > li:nth-of-type(3) {
+                        color:  #f70a16;
+                    }
+                    .legend > li:nth-of-type(4) {
+                        color:   #a00af7;
+                     }
+                    .legend > li:nth-of-type(5) {
+                        color: #ed0ebd;
+                    }
+                        .legend > li:nth-of-type(6) {
+                        color: #081078;
+                    }
+
+                  
+                        
+                </style>
+            </head>
+    <body>
+        <!-- Tooltip element -->
+        <div id="tooltip" class="tooltip"></div>
+        
+        <div class="plot4" style="display: inline-block;">
+            <div style="float:left;width:15%;" >
+                <h3 style="font-size:16px" >Filter by ingredients</h3>
+                <select class="plot4-select" id="ingredientSelect" multiple></select>
+                <h3 style="font-size:16px" >Filter by continents </h3>
+                <select class="plot4-select" id="continentSelect" multiple></select>
+            </div>
+            <div style="float:left;width:75%;" >
+                <!-- SVG container for the scatter plot -->
+                <svg id="ScatterPlot" width="800" height="600"></svg>
+            </div>
+            <div>
+                <ul  class="plotLegnad legend legend-line">
+                    <li> North America </li> 
+                    <li>Europrean </li>
+                    <li>Oceanian </li>
+                    <li> Asian </li>
+                    <li>African </li>
+                    <li> South American </li>
+                  </ul>
+            </div>
+           
+        </div>
+        <script src="./plot4.js">
+            
+        </script>
+    </body>
+</html>
