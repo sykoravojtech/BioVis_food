@@ -69,5 +69,5 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Members
 Carla López Martínez: carla-lm <br>
-Daniel Eskandar: Daniel-Eskandar
-Vojtěch Sýkora: sykoravojtech
+Daniel Eskandar: Daniel-Eskandar <br>
+Vojtěch Sýkora: sykoravojtech <br>
