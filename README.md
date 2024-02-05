@@ -14,6 +14,7 @@
     <li><a href="#columns-of-preprocessing">Columns of Preprocessing</a></li>
     <li><a href="#how-to-run">How to run </a></li>
     <li><a href="#license">License</a></li>
+    <li><a href="#members">Members</a></li>
   </ol>
 </details>
 
@@ -67,4 +68,4 @@ python flaskServer.py
 Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Members
-Carla López Martínez - carla-lm
+Carla López Martínez: carla-lm
